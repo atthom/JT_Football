@@ -29,7 +29,8 @@ def getCoursToTurtule(turtule, intitule, respo_name, respo_email, ects, horaires
         if len(horaires) == 3:
             cours += "\tSI:Horaires_TD " + str(horaires[2]) + " ;\n"
     if resume is not None:
-        cours += "\tSI:Resume \"" + resume + "\"^^xsd:string ;\n"
+        cours += "\tSI:Resume \"" + \
+            resume.replace("'", "").replace("\"", "") + "\"^^xsd:string ;\n"
 
     cours += "\tSI:Semestre " + str(semestre) + " .\n\n"
 
@@ -53,11 +54,7 @@ def make_cours(turtule, cours):
             if index != len(txt):
                 miscs.append(txt[index:len(txt)])
 
-    CNU = None
-    if "." not in miscs[0] and "'" not in miscs[0]:
-        CNU = int(miscs[0])
     horaires = []
-
     for elem in miscs:
         if "h" in elem:
             horaires.append(int(elem[0:1]))
@@ -74,20 +71,29 @@ def make_cours(turtule, cours):
     for nom in cours.iter("NOM"):
         name = nom.text.split(" ")
 
+    resume = None
+    for text in cours.iter("LG"):
+        if text.text is not None and len(text.text) > 10:
+            resume = text.text
+
+    for description in cours.iter("ul"):
+        # print(description.attrib)
+        if "label" in description.attrib:
+            for par in description:
+                pass
+                # print(par.text)
+
     # print(intitule, name, mail, ects, horaires, semestre)
     getCoursToTurtule(turtule, intitule, name, mail,
-                      ects, horaires, semestre, None)
+                      ects, horaires, semestre, resume)
 
 
 turtule = dict()
-
 for cours in root.iter("COURS"):
     make_cours(turtule, cours)
 
 str_base = open("base.ttl", "rb").read()
-
 with open("data.rdf", "wb") as f:
-    f.write(str_base)
-
+    # f.write(str_base)
     for key, value in turtule.items():
         f.write(value.encode("utf-8"))
