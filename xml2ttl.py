@@ -1,11 +1,17 @@
 # coding: utf8
-import lxml.etree as etree
+#import lxml.etree as etree
+import xml.etree.ElementTree as etree
 import re
+import json
+
 tree = etree.parse("finalWord.html")
 root = tree.getroot()
 
+with open("classes", "r") as f:
+    classes = json.load(f)
 
-def getCoursToTurtule(turtule, intitule, respo_name, respo_email, ects, horaires, semestre, resume):
+
+def getCoursToTurtule(turtule, class_cours, intitule, respo_name, respo_email, ects, horaires, semestre, resume):
     id_cours = intitule.replace(" ", "_").replace("'", "")
     id_cours = re.sub('[^A-Za-z0-9-_]+', '', id_cours)
     id_respo = respo_name[0] + "_" + respo_name[1]
@@ -17,7 +23,7 @@ def getCoursToTurtule(turtule, intitule, respo_name, respo_email, ects, horaires
     respo += "\tSI:Nom \"" + respo_name[0] + "\"^^xsd:string ;\n"
     respo += "\tSI:Prenom \"" + respo_name[1] + "\"^^xsd:string .\n\n"
 
-    cours = "SI:" + id_cours + " rdf:type owl:NamedIndividual , SI:Cours ;\n"
+    cours = "SI:" + id_cours + " rdf:type owl:NamedIndividual , " + class_cours + " ;\n"
     cours += "\tSI:Responsable SI:" + id_respo + " ;\n"
     cours += "\tSI:Intitule \"" + intitule + "\"@fr ;\n"
     cours += "\tSI:ECTS " + str(ects) + " ;\n"
@@ -43,12 +49,41 @@ def getCoursToTurtule(turtule, intitule, respo_name, respo_email, ects, horaires
         turtule[id_cours] = cours
 
 
+def getClass(intitule, resume):
+    if resume is None:
+        txt = intitule
+    else:
+        txt = (intitule + " ") * 5 + resume
+
+    txt = txt.strip().lower().split(" ")
+    txt = list(set(txt))
+    #word_count = dict()
+    # for item in txt:
+    #    word_count[item] = txt.count(item)
+
+    # sorted_words = [pair[0] for pair in sorted(
+    #    word_count.items(), key=lambda item: item[1])]
+
+    all_keys = []
+
+    for key, value in classes.items():
+        if len(value) == 1:
+            if value[0].encode("utf-8") in txt:
+                all_keys.append(key)
+        else:
+            intervals = set(txt).intersection(set(value))
+            if len(intervals) == len(value):
+                all_keys.append(key)
+    #print(intitule, all_keys)
+    return "SI:cours"
+
+
 def make_cours(turtule, cours):
     semestre = cours.attrib["semestre"]
     intitule = cours.attrib["titre"]
     miscs = []
     for data in cours.iter("span"):
-        txt = str(etree.tostring(data, pretty_print=False)).strip()
+        txt = str(etree.tostring(data)).strip()
         if "</span>" in txt:
             index = txt.index("</span>") + 7
             if index != len(txt):
@@ -83,8 +118,10 @@ def make_cours(turtule, cours):
                 pass
                 # print(par.text)
 
+    class_cours = getClass(intitule, resume)
+
     # print(intitule, name, mail, ects, horaires, semestre)
-    getCoursToTurtule(turtule, intitule, name, mail,
+    getCoursToTurtule(turtule, class_cours, intitule, name, mail,
                       ects, horaires, semestre, resume)
 
 
