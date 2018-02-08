@@ -129,7 +129,7 @@ turtule = dict()
 for cours in root.iter("COURS"):
     make_cours(turtule, cours)
 
-str_base = open("base.ttl", "rb").read()
+#str_base = open("base.ttl", "rb").read()
 with open("data.rdf", "wb") as f:
     # f.write(str_base)
     for key, value in turtule.items():
