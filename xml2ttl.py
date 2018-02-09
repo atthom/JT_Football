@@ -55,27 +55,26 @@ def getClass(intitule, resume):
     else:
         txt = (intitule + " ") * 5 + resume
 
-    txt = txt.strip().lower().split(" ")
-    txt = list(set(txt))
-    #word_count = dict()
-    # for item in txt:
-    #    word_count[item] = txt.count(item)
-
-    # sorted_words = [pair[0] for pair in sorted(
-    #    word_count.items(), key=lambda item: item[1])]
+    txt = txt.strip().lower().encode('ascii', 'ignore') \
+        .decode('utf8').split(" ")
+    txt = set(txt)
 
     all_keys = []
 
     for key, value in classes.items():
         if len(value) == 1:
-            if value[0].encode("utf-8") in txt:
+            if value[0] in txt:
                 all_keys.append(key)
         else:
-            intervals = set(txt).intersection(set(value))
-            if len(intervals) == len(value):
+            intervals = txt.intersection(set(value))
+            if intervals:
                 all_keys.append(key)
-    #print(intitule, all_keys)
-    return "SI:cours"
+
+    if all_keys:
+        all_k = str(all_keys).replace(
+            "[", "").replace("]", "").replace("'", "")
+        return all_k
+    return "SI:Cours"
 
 
 def make_cours(turtule, cours):

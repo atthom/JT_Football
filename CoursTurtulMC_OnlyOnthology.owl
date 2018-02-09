@@ -188,7 +188,7 @@ SI:AL rdf:type owl:Class ;
 
 ###  http://polytech.unice.fr/cours/SI#Algorithmique
 SI:Algorithmique rdf:type owl:Class ;
-                 rdfs:subClassOf SI:Mathématiques .
+                 rdfs:subClassOf SI:Mathematiques .
 
 
 ###  http://polytech.unice.fr/cours/SI#Allemand
@@ -201,9 +201,9 @@ SI:Alternant rdf:type owl:Class ;
              rdfs:subClassOf SI:Eleve .
 
 
-###  http://polytech.unice.fr/cours/SI#AnalyseDeDonnées
-SI:AnalyseDeDonnées rdf:type owl:Class ;
-                    rdfs:subClassOf SI:SciencesDesDonnées .
+###  http://polytech.unice.fr/cours/SI#AnalyseDeDonnees
+SI:AnalyseDeDonnees rdf:type owl:Class ;
+                    rdfs:subClassOf SI:SciencesDesDonnees .
 
 
 ###  http://polytech.unice.fr/cours/SI#Anglais
@@ -211,8 +211,8 @@ SI:Anglais rdf:type owl:Class ;
            rdfs:subClassOf SI:LV1 .
 
 
-###  http://polytech.unice.fr/cours/SI#Anglais_Renforcé
-SI:Anglais_Renforcé rdf:type owl:Class ;
+###  http://polytech.unice.fr/cours/SI#Anglais_Renforce
+SI:Anglais_Renforce rdf:type owl:Class ;
                     rdfs:subClassOf SI:LV2 .
 
 
@@ -228,7 +228,7 @@ SI:Architecture rdf:type owl:Class ;
 
 ###  http://polytech.unice.fr/cours/SI#BDD
 SI:BDD rdf:type owl:Class ;
-       rdfs:subClassOf SI:SciencesDesDonnées .
+       rdfs:subClassOf SI:SciencesDesDonnees .
 
 
 ###  http://polytech.unice.fr/cours/SI#BigData
@@ -267,7 +267,7 @@ SI:Cours rdf:type owl:Class .
 
 ###  http://polytech.unice.fr/cours/SI#Cryptographie
 SI:Cryptographie rdf:type owl:Class ;
-                 rdfs:subClassOf SI:Mathématiques .
+                 rdfs:subClassOf SI:Mathematiques .
 
 
 ###  http://polytech.unice.fr/cours/SI#Dominante
@@ -277,6 +277,11 @@ SI:Dominante rdf:type owl:Class .
 ###  http://polytech.unice.fr/cours/SI#Eleve
 SI:Eleve rdf:type owl:Class ;
          rdfs:subClassOf SI:Humain .
+
+
+###  http://polytech.unice.fr/cours/SI#Embarque
+SI:Embarque rdf:type owl:Class ;
+            rdfs:subClassOf SI:Informatique .
 
 
 ###  http://polytech.unice.fr/cours/SI#Espagnol
@@ -292,7 +297,7 @@ SI:Expert rdf:type owl:Class ;
 ###  http://polytech.unice.fr/cours/SI#Fonctionelle
 SI:Fonctionelle rdf:type owl:Class ;
                 rdfs:subClassOf SI:Programmation ;
-                owl:disjointWith SI:Prodédurale .
+                owl:disjointWith SI:Prodedurale .
 
 
 ###  http://polytech.unice.fr/cours/SI#Français
@@ -317,6 +322,11 @@ SI:IAM rdf:type owl:Class ;
 ###  http://polytech.unice.fr/cours/SI#IHM
 SI:IHM rdf:type owl:Class ;
        rdfs:subClassOf SI:Dominante .
+
+
+###  http://polytech.unice.fr/cours/SI#Ihm
+SI:Ihm rdf:type owl:Class ;
+       rdfs:subClassOf SI:Informatique .
 
 
 ###  http://polytech.unice.fr/cours/SI#Informatique
@@ -351,12 +361,12 @@ SI:Langues rdf:type owl:Class ;
 
 ###  http://polytech.unice.fr/cours/SI#Logique
 SI:Logique rdf:type owl:Class ;
-           rdfs:subClassOf SI:Mathématiques .
+           rdfs:subClassOf SI:Mathematiques .
 
 
 ###  http://polytech.unice.fr/cours/SI#MachineLearning
 SI:MachineLearning rdf:type owl:Class ;
-                   rdfs:subClassOf SI:AnalyseDeDonnées .
+                   rdfs:subClassOf SI:AnalyseDeDonnees .
 
 
 ###  http://polytech.unice.fr/cours/SI#Maitrise
@@ -369,8 +379,8 @@ SI:Management rdf:type owl:Class ;
               rdfs:subClassOf SI:Gestion .
 
 
-###  http://polytech.unice.fr/cours/SI#Mathématiques
-SI:Mathématiques rdf:type owl:Class ;
+###  http://polytech.unice.fr/cours/SI#Mathematiques
+SI:Mathematiques rdf:type owl:Class ;
                  rdfs:subClassOf SI:Cours .
 
 
@@ -393,8 +403,8 @@ SI:Object rdf:type owl:Class ;
           rdfs:subClassOf SI:Programmation .
 
 
-###  http://polytech.unice.fr/cours/SI#Prodédurale
-SI:Prodédurale rdf:type owl:Class ;
+###  http://polytech.unice.fr/cours/SI#Prodedurale
+SI:Prodedurale rdf:type owl:Class ;
                rdfs:subClassOf SI:Programmation .
 
 
@@ -408,13 +418,18 @@ SI:Programmation rdf:type owl:Class ;
                  rdfs:subClassOf SI:Informatique .
 
 
+###  http://polytech.unice.fr/cours/SI#Projet
+SI:Projet rdf:type owl:Class ;
+          rdfs:subClassOf SI:Cours .
+
+
 ###  http://polytech.unice.fr/cours/SI#RDBS
 SI:RDBS rdf:type owl:Class ;
         rdfs:subClassOf SI:BDD .
 
 
-###  http://polytech.unice.fr/cours/SI#Réseau
-SI:Réseau rdf:type owl:Class ;
+###  http://polytech.unice.fr/cours/SI#Reseau
+SI:Reseau rdf:type owl:Class ;
           rdfs:subClassOf SI:Informatique .
 
 
@@ -428,9 +443,14 @@ SI:SHES rdf:type owl:Class ;
         rdfs:subClassOf SI:Cours .
 
 
-###  http://polytech.unice.fr/cours/SI#SciencesDesDonnées
-SI:SciencesDesDonnées rdf:type owl:Class ;
-                      rdfs:subClassOf SI:Mathématiques .
+###  http://polytech.unice.fr/cours/SI#SciencesDesDonnees
+SI:SciencesDesDonnees rdf:type owl:Class ;
+                      rdfs:subClassOf SI:Mathematiques .
+
+
+###  http://polytech.unice.fr/cours/SI#Securite
+SI:Securite rdf:type owl:Class ;
+            rdfs:subClassOf SI:Informatique .
 
 
 ###  http://polytech.unice.fr/cours/SI#Stage
@@ -440,7 +460,7 @@ SI:Stage rdf:type owl:Class ;
 
 ###  http://polytech.unice.fr/cours/SI#Statistiques
 SI:Statistiques rdf:type owl:Class ;
-                rdfs:subClassOf SI:AnalyseDeDonnées .
+                rdfs:subClassOf SI:AnalyseDeDonnees .
 
 
 ###  http://polytech.unice.fr/cours/SI#WEB
@@ -451,11 +471,6 @@ SI:WEB rdf:type owl:Class ;
 ###  http://polytech.unice.fr/cours/SI#Web
 SI:Web rdf:type owl:Class ;
        rdfs:subClassOf SI:Programmation .
-
-
-#################################################################
-#    Individuals
-#################################################################
 
 
 #################################################################
