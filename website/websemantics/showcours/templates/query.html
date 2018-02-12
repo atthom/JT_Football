@@ -27,8 +27,8 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index">Welcome</a></li>
-                        <li><a href="query">Query</a></li>
+                        <li><a href="index">Welcome</a></li>
+                        <li class="active"><a href="query">Query</a></li>
                         <li><a href="map">Map</a></li>
                     </ul>
 
@@ -40,17 +40,34 @@
 
         <!-- Main component for a primary marketing message or call to action -->
         <div class="jumbotron">
-            <h1> Query !</h1>
-            <p>Here is the front page of the projet of websemantics.</p>
+            <h1> SPARQL Query !</h1>
+            <form class="form-horizontal">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Looking up for something ?</legend>
+                    <!-- Textarea -->
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="textarea">SPARQL Query</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" rows="7" id="textarea" name="textarea">select * where {
+                      ?x ?p ?y
+                    }
+                    </textarea>
+                        </div>
+                    </div>
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="submit"></label>
+                        <div class="col-md-4">
+                            <button id="submit" name="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
         </div>
-
     </div>
-
-
 </body>
-
-
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </html>
