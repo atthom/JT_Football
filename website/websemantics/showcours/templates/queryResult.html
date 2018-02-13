@@ -31,7 +31,6 @@
                         <li class="active"><a href="query">Query</a></li>
                         <li><a href="map">Map</a></li>
                     </ul>
-
                 </div>
                 <!--/.nav-collapse -->
             </div>
@@ -39,33 +38,16 @@
         </nav>
         <!-- Main component for a primary marketing message or call to action -->
         <div class="jumbotron">
-            <h1>Sparql Query !</h1>
-            <form class="form-horizontal" action="query" method="POST">{% csrf_token %}
-                <fieldset>
-                    <!-- Form Name -->
-                    <legend>Looking up for something ?</legend>
-                    <!-- Textarea -->
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="textarea">SPARQL Query</label>
-                        <div class="col-md-8">
-                            {{ form.textarea }}
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <p> Exemple : select * where { ?x ?p ?y } </p>
-                        <!-- Button -->
-                        <div class="form-group">
-                            <div class="col-md-4">
-                                <button type="submit" value="submit" class="btn btn-success">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
+            <h3> Requette : {{ query }} </h3>
+
+            <h3> Resultat : </h3>
+            <p>
+                {{ result }}
+            </p>
         </div>
     </div>
 </body>
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js "></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </html>

@@ -16,5 +16,7 @@ urlpatterns = [
     path('', views.HomePageView.as_view()),
     path('index', views.HomePageView.as_view()),
     path('map', views.MapView.as_view()),
-    path('query', views.QueryView.as_view()),
+    path('query', views.queryView),
+    #path('exemple', views.post_exemple),
+    #path('result', views.result),
 ]
