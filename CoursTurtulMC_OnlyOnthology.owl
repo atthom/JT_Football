@@ -17,26 +17,26 @@
 #    Object Properties
 #################################################################
 
-###  http://polytech.unice.fr/cours/SI#APourResponsable
-SI:APourResponsable rdf:type owl:ObjectProperty ;
+###  http://polytech.unice.fr/cours/SI#aPourResponsable
+SI:aPourResponsable rdf:type owl:ObjectProperty ;
                     rdfs:subPropertyOf owl:topObjectProperty ;
-                    owl:inverseOf SI:EstResponsable ;
+                    owl:inverseOf SI:estResponsable ;
                     rdfs:domain SI:Cours ,
                                 SI:Dominante ;
                     rdfs:range SI:Professeur ;
                     rdfs:comment "Un cours ou dominante a pour responsable un professeur"^^xsd:string .
 
 
-###  http://polytech.unice.fr/cours/SI#Cursus
-SI:Cursus rdf:type owl:ObjectProperty ;
+###  http://polytech.unice.fr/cours/SI#cursus
+SI:cursus rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf owl:topObjectProperty ;
           rdfs:domain SI:Eleve ;
           rdfs:range SI:Dominante ;
           rdfs:comment "Ensemble des études à poursuivre dans une matière donnée"^^xsd:string .
 
 
-###  http://polytech.unice.fr/cours/SI#EstInscrit
-SI:EstInscrit rdf:type owl:ObjectProperty ;
+###  http://polytech.unice.fr/cours/SI#estInscrit
+SI:estInscrit rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf owl:topObjectProperty ;
               rdfs:domain SI:Eleve ;
               rdfs:range SI:Cours ,
@@ -44,14 +44,14 @@ SI:EstInscrit rdf:type owl:ObjectProperty ;
               rdfs:comment "Un étudiant est inscrit dans un cours ou dans une dominante"^^xsd:string .
 
 
-###  http://polytech.unice.fr/cours/SI#EstResponsable
-SI:EstResponsable rdf:type owl:ObjectProperty ;
+###  http://polytech.unice.fr/cours/SI#estResponsable
+SI:estResponsable rdf:type owl:ObjectProperty ;
                   rdfs:subPropertyOf owl:topObjectProperty ;
                   rdfs:comment "Un professeur est responsable d'au moins un cours ou d'une dominante"^^xsd:string .
 
 
-###  http://polytech.unice.fr/cours/SI#Suggestion
-SI:Suggestion rdf:type owl:ObjectProperty ,
+###  http://polytech.unice.fr/cours/SI#suggestion
+SI:suggestion rdf:type owl:ObjectProperty ,
                        owl:SymmetricProperty ;
               rdfs:domain SI:Cours ;
               rdfs:range SI:Cours ;
