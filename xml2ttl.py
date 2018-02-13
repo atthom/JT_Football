@@ -1,5 +1,5 @@
 # coding: utf8
-#import lxml.etree as etree
+# import lxml.etree as etree
 import xml.etree.ElementTree as etree
 import re
 import json
@@ -80,6 +80,8 @@ def getClass(intitule, resume):
 def make_cours(turtule, cours):
     semestre = cours.attrib["semestre"]
     intitule = cours.attrib["titre"]
+
+    all_horaires = ['Cours', 'TD', 'TP', 'Travail Personnel']
     miscs = []
     for data in cours.iter("span"):
         txt = str(etree.tostring(data)).strip()
@@ -90,10 +92,12 @@ def make_cours(turtule, cours):
 
     horaires = []
     for elem in miscs:
+        elem1 = elem.replace("'", "").replace("\\n", "").strip()
         if "h" in elem:
-            horaires.append(int(elem[0:1]))
+            elem1 = elem1.replace("h", "")
+            horaires.append(int(elem1))
         elif "." in elem:
-            ects = float(elem.replace("'", "").strip().replace("\\n", ""))
+            ects = float(elem1)
 
     for data in cours.iter("a"):
         if "href" in data.attrib:
@@ -111,11 +115,9 @@ def make_cours(turtule, cours):
             resume = text.text
 
     for description in cours.iter("ul"):
-        # print(description.attrib)
         if "label" in description.attrib:
             for par in description:
                 pass
-                # print(par.text)
 
     class_cours = getClass(intitule, resume)
 
@@ -128,7 +130,7 @@ turtule = dict()
 for cours in root.iter("COURS"):
     make_cours(turtule, cours)
 
-#str_base = open("base.ttl", "rb").read()
+# str_base = open("base.ttl", "rb").read()
 with open("data.rdf", "wb") as f:
     # f.write(str_base)
     for key, value in turtule.items():
