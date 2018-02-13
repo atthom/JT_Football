@@ -1,0 +1,2342 @@
+@prefix : <http://polytech.unice.fr/cours/SI#> .
+@prefix SI: <http://polytech.unice.fr/cours/SI#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://polytech.unice.fr/cours/SI#> .
+
+<http://polytech.unice.fr/cours/SI#> rdf:type owl:Ontology ;
+                                      owl:versionInfo "0.1"@fr ;
+                                      rdfs:seeAlso "http://users.polytechnice.fr/~pfz/COURS_SSHOW/finalWord.html"@fr ;
+                                      rdfs:label "Ontologie des cours en SI"@fr ;
+                                      rdfs:comment "Ontologie sur les cours proposé en Sciences Informatique à Polytech'Nice-Sophia et développée en cours de Web des Données"@fr .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://polytech.unice.fr/cours/SI#APourResponsable
+SI:APourResponsable rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    owl:inverseOf SI:EstResponsable ;
+                    rdfs:domain SI:Cours ,
+                                SI:Dominante ;
+                    rdfs:range SI:Professeur ;
+                    rdfs:comment "Un cours ou dominante a pour responsable un professeur"^^xsd:string .
+
+
+###  http://polytech.unice.fr/cours/SI#Cursus
+SI:Cursus rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain SI:Eleve ;
+          rdfs:range SI:Dominante ;
+          rdfs:comment "Ensemble des études à poursuivre dans une matière donnée"^^xsd:string .
+
+
+###  http://polytech.unice.fr/cours/SI#EstInscrit
+SI:EstInscrit rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdfs:domain SI:Eleve ;
+              rdfs:range SI:Cours ,
+                         SI:Dominante ;
+              rdfs:comment "Un étudiant est inscrit dans un cours ou dans une dominante"^^xsd:string .
+
+
+###  http://polytech.unice.fr/cours/SI#EstResponsable
+SI:EstResponsable rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf owl:topObjectProperty ;
+                  rdfs:comment "Un professeur est responsable d'au moins un cours ou d'une dominante"^^xsd:string .
+
+
+###  http://polytech.unice.fr/cours/SI#Suggestion
+SI:Suggestion rdf:type owl:ObjectProperty ,
+                       owl:SymmetricProperty ;
+              rdfs:domain SI:Cours ;
+              rdfs:range SI:Cours ;
+              rdfs:comment "Propose des cours similaires au cours séléctionné"^^xsd:string .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://polytech.unice.fr/cours/SI#Competences
+SI:Competences rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf SI:Description ;
+               rdfs:domain SI:Cours ;
+               rdfs:range xsd:string .
+
+
+###  http://polytech.unice.fr/cours/SI#Contenu
+SI:Contenu rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf SI:Description ;
+           rdfs:domain SI:Cours ;
+           rdfs:range xsd:string .
+
+
+###  http://polytech.unice.fr/cours/SI#Description
+SI:Description rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://polytech.unice.fr/cours/SI#Durée
+SI:Durée rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf SI:Horaires ;
+         rdfs:domain SI:Stage ;
+         rdfs:range xsd:integer ;
+         rdfs:comment "La durée du stage en semaine." .
+
+
+###  http://polytech.unice.fr/cours/SI#ECTS
+SI:ECTS rdf:type owl:DatatypeProperty ;
+        rdfs:domain SI:Cours ;
+        rdfs:range xsd:float ;
+        rdfs:comment "Nombre de crédit ECTS donnés pour le cours." .
+
+
+###  http://polytech.unice.fr/cours/SI#Email
+SI:Email rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain SI:Humain ;
+         rdfs:range xsd:string ;
+         rdfs:comment "Email du professeur responsable." .
+
+
+###  http://polytech.unice.fr/cours/SI#Horaires
+SI:Horaires rdf:type owl:DatatypeProperty .
+
+
+###  http://polytech.unice.fr/cours/SI#Horaires_Cours
+SI:Horaires_Cours rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf SI:Horaires ;
+                  rdfs:comment "Horaires pour le cours associé." .
+
+
+###  http://polytech.unice.fr/cours/SI#Horaires_Personnel
+SI:Horaires_Personnel rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf SI:Horaires ;
+                      rdfs:comment "Horaires de travail personnel pour le cours associé." .
+
+
+###  http://polytech.unice.fr/cours/SI#Horaires_TD
+SI:Horaires_TD rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf SI:Horaires ;
+               rdfs:comment "Horaires de TD pour le cours associé." .
+
+
+###  http://polytech.unice.fr/cours/SI#Intitule
+SI:Intitule rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain SI:Cours ;
+            rdfs:range xsd:string ;
+            rdfs:comment "Intitulé du cours." .
+
+
+###  http://polytech.unice.fr/cours/SI#Nom
+SI:Nom rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf owl:topDataProperty ;
+       rdfs:domain SI:Humain ;
+       rdfs:range xsd:string ;
+       rdfs:comment "Nom du professeur" .
+
+
+###  http://polytech.unice.fr/cours/SI#Prenom
+SI:Prenom rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain SI:Humain ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Prénom de la personne." .
+
+
+###  http://polytech.unice.fr/cours/SI#References
+SI:References rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf SI:Description ;
+              rdfs:domain SI:Cours ;
+              rdfs:range xsd:string .
+
+
+###  http://polytech.unice.fr/cours/SI#Resume
+SI:Resume rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf SI:Description ;
+          rdfs:domain SI:Cours ;
+          rdfs:range xsd:string .
+
+
+###  http://polytech.unice.fr/cours/SI#Semestre
+SI:Semestre rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain SI:Cours ;
+            rdfs:range xsd:integer ;
+            rdfs:comment "Numéro du semestre dans lequel est donnée le cours." .
+
+
+###  http://www.w3.org/2002/07/owl#topDataProperty
+owl:topDataProperty rdfs:domain SI:Cours ;
+                    rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://polytech.unice.fr/cours/SI#AL
+SI:AL rdf:type owl:Class ;
+      rdfs:subClassOf SI:Dominante .
+
+
+###  http://polytech.unice.fr/cours/SI#Algorithmique
+SI:Algorithmique rdf:type owl:Class ;
+                 rdfs:subClassOf SI:Mathematiques .
+
+
+###  http://polytech.unice.fr/cours/SI#Allemand
+SI:Allemand rdf:type owl:Class ;
+            rdfs:subClassOf SI:LV2 .
+
+
+###  http://polytech.unice.fr/cours/SI#Alternant
+SI:Alternant rdf:type owl:Class ;
+             rdfs:subClassOf SI:Eleve .
+
+
+###  http://polytech.unice.fr/cours/SI#AnalyseDeDonnees
+SI:AnalyseDeDonnees rdf:type owl:Class ;
+                    rdfs:subClassOf SI:SciencesDesDonnees .
+
+
+###  http://polytech.unice.fr/cours/SI#Anglais
+SI:Anglais rdf:type owl:Class ;
+           rdfs:subClassOf SI:LV1 .
+
+
+###  http://polytech.unice.fr/cours/SI#Anglais_Renforce
+SI:Anglais_Renforce rdf:type owl:Class ;
+                    rdfs:subClassOf SI:LV2 .
+
+
+###  http://polytech.unice.fr/cours/SI#Application
+SI:Application rdf:type owl:Class ;
+               rdfs:subClassOf SI:Niveau .
+
+
+###  http://polytech.unice.fr/cours/SI#Architecture
+SI:Architecture rdf:type owl:Class ;
+                rdfs:subClassOf SI:Informatique .
+
+
+###  http://polytech.unice.fr/cours/SI#BDD
+SI:BDD rdf:type owl:Class ;
+       rdfs:subClassOf SI:SciencesDesDonnees .
+
+
+###  http://polytech.unice.fr/cours/SI#BigData
+SI:BigData rdf:type owl:Class ;
+           rdfs:subClassOf SI:BDD .
+
+
+###  http://polytech.unice.fr/cours/SI#CASPAR
+SI:CASPAR rdf:type owl:Class ;
+          rdfs:subClassOf SI:Dominante .
+
+
+###  http://polytech.unice.fr/cours/SI#Chinois
+SI:Chinois rdf:type owl:Class ;
+           rdfs:subClassOf SI:LV2 .
+
+
+###  http://polytech.unice.fr/cours/SI#Communication
+SI:Communication rdf:type owl:Class ;
+                 rdfs:subClassOf SI:SHES .
+
+
+###  http://polytech.unice.fr/cours/SI#Comptabilite
+SI:Comptabilite rdf:type owl:Class ;
+                rdfs:subClassOf SI:Gestion .
+
+
+###  http://polytech.unice.fr/cours/SI#Conception
+SI:Conception rdf:type owl:Class ;
+              rdfs:subClassOf SI:Informatique .
+
+
+###  http://polytech.unice.fr/cours/SI#Cours
+SI:Cours rdf:type owl:Class .
+
+
+###  http://polytech.unice.fr/cours/SI#Cryptographie
+SI:Cryptographie rdf:type owl:Class ;
+                 rdfs:subClassOf SI:Mathematiques .
+
+
+###  http://polytech.unice.fr/cours/SI#Dominante
+SI:Dominante rdf:type owl:Class .
+
+
+###  http://polytech.unice.fr/cours/SI#Eleve
+SI:Eleve rdf:type owl:Class ;
+         rdfs:subClassOf SI:Humain .
+
+
+###  http://polytech.unice.fr/cours/SI#Embarque
+SI:Embarque rdf:type owl:Class ;
+            rdfs:subClassOf SI:Informatique .
+
+
+###  http://polytech.unice.fr/cours/SI#Espagnol
+SI:Espagnol rdf:type owl:Class ;
+            rdfs:subClassOf SI:LV2 .
+
+
+###  http://polytech.unice.fr/cours/SI#Expert
+SI:Expert rdf:type owl:Class ;
+          rdfs:subClassOf SI:Niveau .
+
+
+###  http://polytech.unice.fr/cours/SI#Fonctionelle
+SI:Fonctionelle rdf:type owl:Class ;
+                rdfs:subClassOf SI:Programmation ;
+                owl:disjointWith SI:Prodedurale .
+
+
+###  http://polytech.unice.fr/cours/SI#Français
+SI:Français rdf:type owl:Class ;
+            rdfs:subClassOf SI:LV1 .
+
+
+###  http://polytech.unice.fr/cours/SI#Gestion
+SI:Gestion rdf:type owl:Class ;
+           rdfs:subClassOf SI:SHES .
+
+
+###  http://polytech.unice.fr/cours/SI#Humain
+SI:Humain rdf:type owl:Class .
+
+
+###  http://polytech.unice.fr/cours/SI#IAM
+SI:IAM rdf:type owl:Class ;
+       rdfs:subClassOf SI:Dominante .
+
+
+###  http://polytech.unice.fr/cours/SI#IHM
+SI:IHM rdf:type owl:Class ;
+       rdfs:subClassOf SI:Dominante .
+
+
+###  http://polytech.unice.fr/cours/SI#Ihm
+SI:Ihm rdf:type owl:Class ;
+       rdfs:subClassOf SI:Informatique .
+
+
+###  http://polytech.unice.fr/cours/SI#Informatique
+SI:Informatique rdf:type owl:Class ;
+                rdfs:subClassOf SI:Cours .
+
+
+###  http://polytech.unice.fr/cours/SI#LV1
+SI:LV1 rdf:type owl:Class ;
+       rdfs:subClassOf SI:Langues .
+
+
+###  http://polytech.unice.fr/cours/SI#LV2
+SI:LV2 rdf:type owl:Class ;
+       rdfs:subClassOf SI:Langues ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty SI:Semestre ;
+                         owl:minQualifiedCardinality "6"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:integer
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty SI:Semestre ;
+                         owl:maxQualifiedCardinality "8"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:integer
+                       ] .
+
+
+###  http://polytech.unice.fr/cours/SI#Langues
+SI:Langues rdf:type owl:Class ;
+           rdfs:subClassOf SI:SHES .
+
+
+###  http://polytech.unice.fr/cours/SI#Logique
+SI:Logique rdf:type owl:Class ;
+           rdfs:subClassOf SI:Mathematiques .
+
+
+###  http://polytech.unice.fr/cours/SI#MachineLearning
+SI:MachineLearning rdf:type owl:Class ;
+                   rdfs:subClassOf SI:AnalyseDeDonnees .
+
+
+###  http://polytech.unice.fr/cours/SI#Maitrise
+SI:Maitrise rdf:type owl:Class ;
+            rdfs:subClassOf SI:Niveau .
+
+
+###  http://polytech.unice.fr/cours/SI#Management
+SI:Management rdf:type owl:Class ;
+              rdfs:subClassOf SI:Gestion .
+
+
+###  http://polytech.unice.fr/cours/SI#Mathematiques
+SI:Mathematiques rdf:type owl:Class ;
+                 rdfs:subClassOf SI:Cours .
+
+
+###  http://polytech.unice.fr/cours/SI#Mundus
+SI:Mundus rdf:type owl:Class ;
+          rdfs:subClassOf SI:Eleve .
+
+
+###  http://polytech.unice.fr/cours/SI#Niveau
+SI:Niveau rdf:type owl:Class .
+
+
+###  http://polytech.unice.fr/cours/SI#Notion
+SI:Notion rdf:type owl:Class ;
+          rdfs:subClassOf SI:Niveau .
+
+
+###  http://polytech.unice.fr/cours/SI#Object
+SI:Object rdf:type owl:Class ;
+          rdfs:subClassOf SI:Programmation .
+
+
+###  http://polytech.unice.fr/cours/SI#Prodedurale
+SI:Prodedurale rdf:type owl:Class ;
+               rdfs:subClassOf SI:Programmation .
+
+
+###  http://polytech.unice.fr/cours/SI#Professeur
+SI:Professeur rdf:type owl:Class ;
+              rdfs:subClassOf SI:Humain .
+
+
+###  http://polytech.unice.fr/cours/SI#Programmation
+SI:Programmation rdf:type owl:Class ;
+                 rdfs:subClassOf SI:Informatique .
+
+
+###  http://polytech.unice.fr/cours/SI#Projet
+SI:Projet rdf:type owl:Class ;
+          rdfs:subClassOf SI:Cours .
+
+
+###  http://polytech.unice.fr/cours/SI#RDBS
+SI:RDBS rdf:type owl:Class ;
+        rdfs:subClassOf SI:BDD .
+
+
+###  http://polytech.unice.fr/cours/SI#Reseau
+SI:Reseau rdf:type owl:Class ;
+          rdfs:subClassOf SI:Informatique .
+
+
+###  http://polytech.unice.fr/cours/SI#SD
+SI:SD rdf:type owl:Class ;
+      rdfs:subClassOf SI:Dominante .
+
+
+###  http://polytech.unice.fr/cours/SI#SHES
+SI:SHES rdf:type owl:Class ;
+        rdfs:subClassOf SI:Cours .
+
+
+###  http://polytech.unice.fr/cours/SI#SciencesDesDonnees
+SI:SciencesDesDonnees rdf:type owl:Class ;
+                      rdfs:subClassOf SI:Mathematiques .
+
+
+###  http://polytech.unice.fr/cours/SI#Securite
+SI:Securite rdf:type owl:Class ;
+            rdfs:subClassOf SI:Informatique .
+
+
+###  http://polytech.unice.fr/cours/SI#Stage
+SI:Stage rdf:type owl:Class ;
+         rdfs:subClassOf SI:Cours .
+
+
+###  http://polytech.unice.fr/cours/SI#Statistiques
+SI:Statistiques rdf:type owl:Class ;
+                rdfs:subClassOf SI:AnalyseDeDonnees .
+
+
+###  http://polytech.unice.fr/cours/SI#WEB
+SI:WEB rdf:type owl:Class ;
+       rdfs:subClassOf SI:Dominante .
+
+
+###  http://polytech.unice.fr/cours/SI#Web
+SI:Web rdf:type owl:Class ;
+       rdfs:subClassOf SI:Programmation .
+
+SI:Dery_Anne-Marie rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "pinna@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Dery"^^xsd:string ;
+	SI:Prenom "Anne-Marie"^^xsd:string .
+
+SI:Algorithmique_et_Structures_de_donnes_1 rdf:type owl:NamedIndividual , SI:Algorithmique ;
+	SI:Responsable SI:Dery_Anne-Marie ;
+	SI:Intitule "Algorithmique et Structures de données 1"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 7 ;
+	SI:Horaires_Personnel 14 ;
+	SI:Horaires_TD 10 ;
+	SI:Resume "Cet enseignement reprend les structures de données supposées acquises : tableaux, listes, pile, file et arbres. Ce rappel met en évidence dans quels cas leur utilisation est préférable par le biais dalgorithmes types et de calcul de complexité.
+                "^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Storey_Franoise rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "fstorey@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Storey"^^xsd:string ;
+	SI:Prenom "Françoise"^^xsd:string .
+
+SI:Anglais_5 rdf:type owl:NamedIndividual , SI:Anglais_Renforce, SI:Anglais ;
+	SI:Responsable SI:Storey_Franoise ;
+	SI:Intitule "Anglais 5"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 30 ;
+	SI:Horaires_Personnel 15 ;
+	SI:Resume "Anglais général: travail en laboratoire de langues, initiation certification, écriture de mails en anglais, exposés en pecha kucha, différences culturelles, le curriculum vitae en anglais, grammaire et vocabulaire, questions de société.
+                "^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Rueher_Michel rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "michel.rueher@gmail.com"^^xsd:string ;
+	SI:Nom "Rueher"^^xsd:string ;
+	SI:Prenom "Michel"^^xsd:string .
+
+SI:Bases_de_donnes_relationnelles rdf:type owl:NamedIndividual , SI:RDBS ;
+	SI:Responsable SI:Rueher_Michel ;
+	SI:Intitule "Bases de données relationnelles"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 13 ;
+	SI:Horaires_Personnel 26 ;
+	SI:Horaires_TD 19 ;
+	SI:Resume "Ce cours est une introduction aux bases de données relationnelles, tant dun point de vue conceptuel que pratique."^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Bachelot_Christinne rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "bachelot@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Bachelot"^^xsd:string ;
+	SI:Prenom "Christinne"^^xsd:string .
+
+SI:Communication_1 rdf:type owl:NamedIndividual , SI:Communication ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "Communication 1"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Resume "Le module permet à l’étudiant de mieux se connaître pour mieux communiquer."^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Connaissance_Entreprise_1 rdf:type owl:NamedIndividual , SI:Management, SI:Object, SI:Programmation ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "Connaissance Entreprise 1"@fr ;
+	SI:ECTS 1.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 6 ;
+	SI:Resume "Le module vise à présenter lentreprise, à comprendre lentreprise en terme de processus et le déploiement de la démarche qualité dans lentreprise
+                "^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Informatique_Thorique_1 rdf:type owl:NamedIndividual , SI:Algorithmique, SI:Informatique, SI:Logique ;
+	SI:Responsable SI:Rueher_Michel ;
+	SI:Intitule "Informatique Théorique 1"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 39 ;
+	SI:Horaires_Personnel 19 ;
+	SI:Resume "Ce premier cours dinformatique théorique est constitué dune part dune introduction à la logique et dautre part à une introduction des structures recursives.
+                "^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Collavizza_Hlne rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "helen@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Collavizza"^^xsd:string ;
+	SI:Prenom "Hélène"^^xsd:string .
+
+SI:Principes_dexcution_des_programmes rdf:type owl:NamedIndividual , SI:Cours ;
+	SI:Responsable SI:Collavizza_Hlne ;
+	SI:Intitule "Principes d'exécution des programmes"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 13 ;
+	SI:Horaires_Personnel 26 ;
+	SI:Horaires_TD 19 ;
+	SI:Resume "Tour dhorizon des mécanismes architecturaux mis en jeu dans lexécution dun programme"^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Sander_Peter rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "sander@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Sander"^^xsd:string ;
+	SI:Prenom "Peter"^^xsd:string .
+
+SI:Programmation_Oriente_Objet rdf:type owl:NamedIndividual , SI:Fonctionelle, SI:Object, SI:Prodedurale, SI:Programmation ;
+	SI:Responsable SI:Sander_Peter ;
+	SI:Intitule "Programmation Orientée Objet"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 13 ;
+	SI:Horaires_Personnel 26 ;
+	SI:Horaires_TD 15 ;
+	SI:Resume "Ce cours est une introduction à la programmation orientée objet. A la fin, vous serez capable de livrer une application de qualité professionnelle en Java qui répond à un cahier de charges. Java est le langage étudié dans ce cours, mais
+                    il nest pas le seul langage de programmation orientée objet, ni forcément le meilleur. Nous le confrontons à dautres approches.
+                "^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Gallesio_Erick rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "eg@essi.fr"^^xsd:string ;
+	SI:Nom "Gallesio"^^xsd:string ;
+	SI:Prenom "Erick"^^xsd:string .
+
+SI:Programmation_procdurale rdf:type owl:NamedIndividual , SI:Fonctionelle, SI:Object, SI:Prodedurale, SI:Programmation ;
+	SI:Responsable SI:Gallesio_Erick ;
+	SI:Intitule "Programmation procédurale"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 13 ;
+	SI:Horaires_Personnel 26 ;
+	SI:Horaires_TD 19 ;
+	SI:Resume "Étude de la programmation procédurale - Langage C"^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Mosser_Sbastien rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "mosser@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Mosser"^^xsd:string ;
+	SI:Prenom "Sébastien"^^xsd:string .
+
+SI:Projet_Semestre_5 rdf:type owl:NamedIndividual , SI:Projet ;
+	SI:Responsable SI:Mosser_Sbastien ;
+	SI:Intitule "Projet Semestre 5"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 60 ;
+	SI:Horaires_Personnel 26 ;
+	SI:Resume "Les projets permettent la mise en application des concepts vu en cours à coté, ainsi que la découverte de nouvelles technologies en apprentissage autonome.
+                "^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Qualit_et_Gnie_logiciel_1 rdf:type owl:NamedIndividual , SI:Gestion, SI:Informatique, SI:Object, SI:Programmation, SI:Projet ;
+	SI:Responsable SI:Mosser_Sbastien ;
+	SI:Intitule "Qualité et Génie logiciel 1"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 7 ;
+	SI:Horaires_Personnel 14 ;
+	SI:Horaires_TD 11 ;
+	SI:Resume "Ce cours permet la découverte des outils de gestion de projet informatique utilisée en support du métier dingénieur logiciel. Il aborde le suivi et le pilotage des tâches de développement, la gestion de versions, la gestion de dépendances
+                    et limportance du test dans un projet logiciel. Une mise en oeuvre sur projet fil rouge sur la totalité du semestre permet dappliquer constamment les principes vu en cours sur un projet grande-échelle.
+                "^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Lingrand_Diane rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "lingrand@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Lingrand"^^xsd:string ;
+	SI:Prenom "Diane"^^xsd:string .
+
+SI:Signal_Son_et_Image_pour_linformaticien rdf:type owl:NamedIndividual , SI:Mathematiques ;
+	SI:Responsable SI:Lingrand_Diane ;
+	SI:Intitule "Signal Son et Image pour l'informaticien"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 13 ;
+	SI:Horaires_Personnel 26 ;
+	SI:Horaires_TD 19 ;
+	SI:Resume "Cours dinitiation à lanalyse et au traitement du signal numérique, illustration avec le signal audio, et extension à limage, concepts et outils de traitement.
+                "^^xsd:string ;
+	SI:Semestre 5 .
+
+SI:Algorithmique_et_Structures_de_donnes_2 rdf:type owl:NamedIndividual , SI:Algorithmique ;
+	SI:Responsable SI:Collavizza_Hlne ;
+	SI:Intitule "Algorithmique et Structures de données 2"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 7 ;
+	SI:Horaires_Personnel 14 ;
+	SI:Horaires_TD 11 ;
+	SI:Resume "algorithmique sur les graphes"^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Michel_Colette rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Michel"^^xsd:string ;
+	SI:Prenom "Colette"^^xsd:string .
+
+SI:Analyse_et_conception_oriente_objet rdf:type owl:NamedIndividual , SI:AnalyseDeDonnees, SI:Conception, SI:Object ;
+	SI:Responsable SI:Michel_Colette ;
+	SI:Intitule "Analyse et conception orientée objet"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 7 ;
+	SI:Horaires_Personnel 14 ;
+	SI:Horaires_TD 11 ;
+	SI:Resume "Présentation et mise en oeuvre de la notation UML sur les phases de définition des besoins, danalyse et de conception dune application.
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Anglais_6 rdf:type owl:NamedIndividual , SI:Anglais_Renforce, SI:Anglais, SI:Projet ;
+	SI:Responsable SI:Storey_Franoise ;
+	SI:Intitule "Anglais 6"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Resume "Anglais général: travail en laboratoire de langues, toutes compétences, initiation certification, compétences téléphoniques, culture scientifique, débats, exposés en pecha kucha, grammaire, vocabulaire, compréhension de documents écrits
+                    et oraux, projet en pédagogie active sur limpact dinternet et des technologies sur nos sociétés
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Connaissance_Entreprise_2 rdf:type owl:NamedIndividual , SI:Management ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "Connaissance Entreprise 2"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 6 ;
+	SI:Resume "Le module permet de découvrir le fonctionnement général d’une entreprise : notamment la fonction commerciale (techniques de lancement de nouveaux produits, études de marché et marketing-mix) et la fonction comptable - initiation aux principes
+                    de la comptabilité générale (bilan, compte de résultat)
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Bond_Johny rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Bond"^^xsd:string ;
+	SI:Prenom "Johny"^^xsd:string .
+
+SI:Informatique_Thorique_2_Langages_Formels rdf:type owl:NamedIndividual , SI:Algorithmique, SI:Informatique ;
+	SI:Responsable SI:Bond_Johny ;
+	SI:Intitule "Informatique Théorique 2 (Langages Formels)"@fr ;
+	SI:ECTS 2.5 ;
+	SI:Horaires_Cours 13 ;
+	SI:Horaires_Personnel 26 ;
+	SI:Horaires_TD 19 ;
+	SI:Resume "Introduction aux langages formels. La première partie du cours traite les langages rationnels et les automates finis. La deuxième partie est consacrée aux grammaires et automates à pile.
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Occello_Audrey rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Occello"^^xsd:string ;
+	SI:Prenom "Audrey"^^xsd:string .
+
+SI:Interfaces_Homme_Machine rdf:type owl:NamedIndividual , SI:Fonctionelle, SI:MachineLearning, SI:Reseau, SI:Ihm ;
+	SI:Responsable SI:Occello_Audrey ;
+	SI:Intitule "Interfaces Homme Machine"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 8 ;
+	SI:Horaires_Personnel 31 ;
+	SI:Horaires_TD 19 ;
+	SI:Resume "Cet enseignement a pour but dimplémenter des Interfaces Homme Machines (IHM) spécifiques à certains types dapplications. Les types dapplications visés sont : les applications installées directement sur PC (applications pour bureau),
+                    les applications installées sur smartphones (applications mobiles) et les applications exécutées à travers un navigateur internet (applications web). Cet enseignement a également pour but dapprendre aux étudiants à architecturer leurs
+                    applications de sorte que la partie IHM soit séparée de la partie fonctionnelle pour une meilleure modularité du code.
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:LV2_s6 rdf:type owl:NamedIndividual , SI:Chinois, SI:Langues ;
+	SI:Responsable SI:Storey_Franoise ;
+	SI:Intitule "LV2 s6"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Resume "Langue vivante 2: Si létudiant a validé un score suffisant en anglais,il peut choisir comme LV2 parmi lAllemand non débutant, le Chinois débutant, ou lEspagnol tous niveaux. Létudiant qui na pas validé un score suffisant en anglais
+                    est orienté automatiquement vers un cours danglais renforcé. Étude de la langue (toutes compétences), culture du pays. Pour le cours danglais renforcé: révision des bases.
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Faron_Zucker rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "faron@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Faron"^^xsd:string ;
+	SI:Prenom "Zucker"^^xsd:string .
+
+SI:Langages_du_Web rdf:type owl:NamedIndividual , SI:Web ;
+	SI:Responsable SI:Faron_Zucker ;
+	SI:Intitule "Langages du Web"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 7 ;
+	SI:Horaires_Personnel 14 ;
+	SI:Horaires_TD 11 ;
+	SI:Resume "Ce cours introduit aux principes de documents structurés et langages de balisages et présente les langages HTML5, CSS3 et XML.
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Programmation_systmes_POSIX rdf:type owl:NamedIndividual , SI:Fonctionelle, SI:Object, SI:Prodedurale, SI:Programmation ;
+	SI:Responsable SI:Gallesio_Erick ;
+	SI:Intitule "Programmation systèmes POSIX"@fr ;
+	SI:ECTS 2.5 ;
+	SI:Horaires_Cours 13 ;
+	SI:Horaires_Personnel 26 ;
+	SI:Horaires_TD 19 ;
+	SI:Resume "Cet enseignement est un cours de programmation système basé sur la norme POSIX (Portable Operating System Interface). Les principaux concepts et appels système de cette norme sont présentés dans ce cours (entrées-sorties, système de fichier,
+                    processus, signaux, exceptions, tubes, processus légers, ...).
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Projet_Semestre_6 rdf:type owl:NamedIndividual , SI:Projet ;
+	SI:Responsable SI:Mosser_Sbastien ;
+	SI:Intitule "Projet Semestre 6"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 60 ;
+	SI:Horaires_Personnel 31 ;
+	SI:Resume "Les projets permettent la mise en application des concepts vu en cours, en interagissant avec des clients exprimant leurs besoins.
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Qualit_et_Gnie_logiciel_2 rdf:type owl:NamedIndividual , SI:Gestion, SI:Informatique, SI:Object, SI:Programmation, SI:Projet ;
+	SI:Responsable SI:Mosser_Sbastien ;
+	SI:Intitule "Qualité et Génie logiciel 2"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 7 ;
+	SI:Horaires_Personnel 14 ;
+	SI:Horaires_TD 11 ;
+	SI:Resume "Ce cours permet la découverte des outils de gestion de projet informatique utilisés en support du métier dingénieur logiciel. Il aborde le suivi et le pilotage des tâches de développement, la gestion de versions, la gestion de dépendances
+                    et limportance du test dans un projet logiciel. Une mise en oeuvre sur projet fil rouge sur la totalité du semestre permet dappliquer constamment les principes vu en cours sur un projet grande-échelle.
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Lopez_Dino rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "dino.lopez@unice.fr"^^xsd:string ;
+	SI:Nom "Lopez"^^xsd:string ;
+	SI:Prenom "Dino"^^xsd:string .
+
+SI:Rseaux_configuration_et_programmation rdf:type owl:NamedIndividual , SI:Architecture, SI:Communication, SI:Fonctionelle, SI:Object, SI:Prodedurale, SI:Programmation, SI:Reseau ;
+	SI:Responsable SI:Lopez_Dino ;
+	SI:Intitule "Réseaux: configuration et programmation"@fr ;
+	SI:ECTS 2.5 ;
+	SI:Horaires_Cours 13 ;
+	SI:Horaires_Personnel 26 ;
+	SI:Horaires_TD 19 ;
+	SI:Resume "Le cours Réseaux : Configuration et Programmation est composé de 4 grands objectifs : 1. Introduire les éléments nécessaire pour la compréhension à larchitecture des réseaux IP classiques, ainsi que la compréhension des différences
+                    essentielles entre les réseaux sans-fil et les réseaux câblés. 2. Comprendre les nouvelles architectures réseaux, nées de lutilisation massive de la virtualisation et la compréhension/utilisation des mécanismes de virtualisation.
+                    3. Manipuler/configurer des clients et des services réseaux. Comprendre les principes de la communication (sockets) entre deux nœuds et larchitecture générale dun serveur dun point de vu de la communication. 4. Comprendre les bases
+                    des Application Réparties et être en mesure de définir/écrire un protocole dapplication
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Stage_EPU3 rdf:type owl:NamedIndividual , SI:Stage, SI:Projet ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "Stage EPU3"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Resume "Ce stage découverte du monde de lentreprise, dune durée de quatre semaines minimum,est la première des 3 expériences que va connaitre lélève Ingénieur au cours de sa formation et doit être considéré comme un véritable projet professionnel.
+
+
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Papazian_Christophe rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "papazian@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Papazian"^^xsd:string ;
+	SI:Prenom "Christophe"^^xsd:string .
+
+SI:Traitement_danalyse_statistiques_de_donnes rdf:type owl:NamedIndividual , SI:Statistiques ;
+	SI:Responsable SI:Papazian_Christophe ;
+	SI:Intitule "Traitement d'analyse statistiques de données"@fr ;
+	SI:ECTS 2.5 ;
+	SI:Horaires_Cours 39 ;
+	SI:Horaires_Personnel 19 ;
+	SI:Resume "Rappels et approfondissements sur les variables aléatoires usuelles discrètes et sur les variables aléatoires à densité, vecteurs de variables aléatoires, exemples de simulation de ces lois, théorèmes limites et applications dans le cadre
+                    des estimateurs, intervalles de confiance et tests dhypothèse.
+                "^^xsd:string ;
+	SI:Semestre 6 .
+
+SI:Anglais_7 rdf:type owl:NamedIndividual , SI:Anglais_Renforce, SI:Anglais, SI:Stage ;
+	SI:Responsable SI:Storey_Franoise ;
+	SI:Intitule "Anglais 7"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Resume "Anglais général pour certification TOEIC©L/R (passage du test officiel en fin de semestre), résumé du rapport de stage de 3ème année ou dune expérience à létranger, préparation à la mobilité internationale, travail de recherche, rapports
+                    oraux.
+                "^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:Fillatre_Lionel rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Fillatre"^^xsd:string ;
+	SI:Prenom "Lionel"^^xsd:string .
+
+SI:Apprentissage_automatique_pour_les_donnes_massives rdf:type owl:NamedIndividual , SI:BDD, SI:BigData, SI:RDBS ;
+	SI:Responsable SI:Fillatre_Lionel ;
+	SI:Intitule "Apprentissage automatique pour les données massives"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Découvrir les méthodes de base et les principaux outils informatiques pour le traitement des données massives."^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:Compilation rdf:type owl:NamedIndividual , SI:Programmation ;
+	SI:Responsable SI:Gallesio_Erick ;
+	SI:Intitule "Compilation"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Semestre 7 .
+
+SI:Complexit_et_calculabilit rdf:type owl:NamedIndividual , SI:BDD, SI:RDBS ;
+	SI:Responsable SI:Bond_Johny ;
+	SI:Intitule "Complexité et calculabilité"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Complexité : notions de base de complexité. Le modèle de Turing. Classes P et NP. Problèmes NP-complets. Preuves de NP-complétude. Introduction aux algorithmes dapproximation. Calculabilité.
+                "^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:Precioso_Frdric rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "precioso@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Precioso"^^xsd:string ;
+	SI:Prenom "Frédéric"^^xsd:string .
+
+SI:Computer_Vision_and_Machine_Learning rdf:type owl:NamedIndividual , SI:Langues, SI:MachineLearning, SI:Projet ;
+	SI:Responsable SI:Precioso_Frdric ;
+	SI:Intitule "Computer Vision and Machine Learning"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Ce cours sarticule autour dun projet fil rouge : le développement dune application en C++ de reconnaissance de la langue des signes en temps-réel à partir dune webcam. Le cours présente les principes de lapprentissage artificiel et
+                    de vision par ordinateur, détaille les mécanismes des algorithmes classiques dapprentissage statistique qui permettent ensuite aux étudiants de développer leur application en assemblant des briques logicielles présentes dans la librairie
+                    standard OpenCV.
+                "^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:Conception_oriente_objet rdf:type owl:NamedIndividual , SI:Conception, SI:Object ;
+	SI:Responsable SI:Michel_Colette ;
+	SI:Intitule "Conception orientée objet"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 6 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Horaires_TD 9 ;
+	SI:Resume "Présentation et utilisation des schémas de conception"^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:Gestion_dentreprise rdf:type owl:NamedIndividual , SI:Gestion ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "Gestion d'entreprise"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Resume "Le module doit permettre de comprendre les indicateurs clés d’une bonne gestion financière de l’entreprise, d’analyser et de diagnostiquer la santé financière d’entreprise par le biais de cas d’entreprises.
+                "^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:Riveill_Michel rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Riveill"^^xsd:string ;
+	SI:Prenom "Michel"^^xsd:string .
+
+SI:Gestion_de_la_concurrence rdf:type owl:NamedIndividual , SI:Architecture, SI:Gestion ;
+	SI:Responsable SI:Riveill_Michel ;
+	SI:Intitule "Gestion de la concurrence"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Connaitre les principaux problèmes posés par le partage de ressources et les solutions pouvant être apportées que ce soit dans une architecture avec mémoire commune ou une architecture répartie sans mémoire commune. Les problèmes concernent
+                    la gestion de la famine et des interblocages. Les modèles étudiés concernent les rendez-vous, la barrière, lecteur-redacteur, producteur-consommateur en architecture avec ou sans mémoire commune.
+                "^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:Gestion_de_projet rdf:type owl:NamedIndividual , SI:Gestion, SI:Management, SI:Projet ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "Gestion de projet"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 16 ;
+	SI:Horaires_Personnel 8 ;
+	SI:Resume "Le module doit permettre aux étudiants de découvrir le management de projet, ses caractéristiques et son importance dans la réalisation d’un produit. L’illustration des bonnes pratiques sera faite en développant des études de cas et des
+                    exercices concrets.
+                "^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:LV2_s7 rdf:type owl:NamedIndividual , SI:Anglais_Renforce, SI:Anglais, SI:Langues ;
+	SI:Responsable SI:Storey_Franoise ;
+	SI:Intitule "LV2 s7"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Resume "Langue vivante 2: létudiant continue détudier la langue quil avait choisie en S6 (ou continue en anglais renforcé). Étude de la langue (toutes compétences), culture du pays, culture dentreprise, le Curriculum Vitae dans la langue du
+                    pays, préparation à la mobilité. Anglais renforcé: préparation à la certification.
+                "^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:Langages_XML_schmas_et_transformations rdf:type owl:NamedIndividual , SI:Cours ;
+	SI:Responsable SI:Faron_Zucker ;
+	SI:Intitule "Langages XML: schémas et transformations"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 6 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Horaires_TD 9 ;
+	SI:Resume "Ce cours présente les langages standards clés des technologies XML: le langage XPath dexpressions de localisation, le langage XSD de définition de modèles de documents XML et le langage XSLT de transformation de documents XML. Il est
+                    illustré sur plusieurs dialectes XML.
+                "^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:Rigault_Jean-Paul rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Rigault"^^xsd:string ;
+	SI:Prenom "Jean-Paul"^^xsd:string .
+
+SI:Programmation_multi-paradigmes_en_C rdf:type owl:NamedIndividual , SI:Fonctionelle, SI:Object, SI:Prodedurale, SI:Programmation ;
+	SI:Responsable SI:Rigault_Jean-Paul ;
+	SI:Intitule "Programmation multi-paradigmes en C++"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Apprentissage des bases du langage C++"^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:Projet_Semestre_7 rdf:type owl:NamedIndividual , SI:Projet ;
+	SI:Responsable SI:Mosser_Sbastien ;
+	SI:Intitule "Projet Semestre 7"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 100 ;
+	SI:Horaires_Personnel 32 ;
+	SI:Resume "Ce projet de 3 semaines à temps plein permet de mettre en applications les enseignements formels et appliqués des autres cours sur un problème original.
+                "^^xsd:string ;
+	SI:Semestre 7 .
+
+SI:Algorithmique_avance rdf:type owl:NamedIndividual , SI:Algorithmique, SI:Fonctionelle, SI:Object, SI:Prodedurale, SI:Programmation ;
+	SI:Responsable SI:Bond_Johny ;
+	SI:Intitule "Algorithmique avancée"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Ce cours est composé de plusieurs parties indépendantes: Algorithmes de flots, Algorithmes de recherches de motifs et algorithmes du génome et programmation dynamique, Algorithmes randomisés, Algorithmes géométriques,
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Anglais_8 rdf:type owl:NamedIndividual , SI:Anglais_Renforce, SI:Anglais, SI:Projet ;
+	SI:Responsable SI:Storey_Franoise ;
+	SI:Intitule "Anglais 8"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Resume "Anglais général et professionnel, les media et la culture anglosaxone, la culture dentreprise, mise à jour du CV, lettre de motivation, entretien dembauche, projet en pédagogie active sur une invention ou une innovation qui na pas encore
+                    été développée, travail de recherche sur une entreprise, un plan de carrière et exposé en pecha kucha
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:De_Antoni rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "De"^^xsd:string ;
+	SI:Prenom "Antoni"^^xsd:string .
+
+SI:Capteursactionneurs_et_systmes_hybrides rdf:type owl:NamedIndividual , SI:BDD, SI:Informatique, SI:MachineLearning, SI:RDBS ;
+	SI:Responsable SI:De_Antoni ;
+	SI:Intitule "Capteurs/actionneurs et systèmes hybrides"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Les systèmes hybrides sont des systèmes dynamiques dans lesquels un système de contrôle événementiel régule un système à temps continu. Les liens entre les process continus et les process discrets qui le contrôlent sont fait au travers
+                    de capteurs et dactionneurs. Ce cours sattache à faire une introduction au contrôle informatique de processus physiques tels que ceux utilisés dans les systèmes de contrôle commande. Il met en avant le lien entre le monde du contrôle
+                    discret (à base de machine à états) et le monde du contrôle continu (à base de PID par exemple).
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Communication_2 rdf:type owl:NamedIndividual , SI:Communication ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "Communication 2"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Resume "Le module doit permettre à l’étudiant d’améliorer sa communication de groupe: analyser les interactions dans un groupe, développer son autonomie et sa capacité d’organisation et donc faciliter lobtention de stages.
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Molines_Guilhem rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "Guilhem.MOLINES@unice.fr"^^xsd:string ;
+	SI:Nom "Molines"^^xsd:string ;
+	SI:Prenom "Guilhem"^^xsd:string .
+
+SI:DevOps__Continuous_Testing rdf:type owl:NamedIndividual , SI:Cours ;
+	SI:Responsable SI:Molines_Guilhem ;
+	SI:Intitule "DevOps & Continuous Testing"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Newly graduated students are generally good at writing code as well as unit-testing it. They know different programming languages, understand the concepts of software architecture, havebeen exposed to environments such as Cloud or Web
+                    Services. Yet what they often lack is a comprehensive view at the testing phase, including test that require hard-to-setup environments, as well as the ability define a build-and-test pipeline, to automate deployments, to operate deployed
+                    systems. This option will teach students all the concepts that are needed to produce a robust Software Factory, that supports the notion of Continuous Delivery, delivering robust code backed by comprehensive testing techniques. This
+                    is a very hands-on class, as students will be guided to implement the tests and factory, which will be exercised on thee complex project included in the Application Servers class.
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Finite_State_Machines rdf:type owl:NamedIndividual , SI:Communication ;
+	SI:Responsable SI:De_Antoni ;
+	SI:Intitule "Finite State Machines"@fr ;
+	SI:ECTS 1.0 ;
+	SI:Horaires_Cours 6 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Horaires_TD 9 ;
+	SI:Resume "Ce cours permet de souligner une utilisation pragmatique des machines à états finis dans différents pans de linformatique. Le cours montrera lutilisation de machines à états pour la définition de protocole de communication aussi bien
+                    que pour la définition du contrôle dun système embarqué. Différentes classes de machines à états seront introduites conjointement avec leur outil. Lobjectif principal est de comprendre le rôle central que prennent ces représentations
+                    dans linformatique de tous les jours. Les mises en œuvres varieront de la génération de code C et Java à lutilisation de langages formels comme les automates temporisés.
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Lavirotte_Stphane rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "stephane@lavirotte.com"^^xsd:string ;
+	SI:Nom "Lavirotte"^^xsd:string ;
+	SI:Prenom "Stéphane"^^xsd:string .
+
+SI:Introduction_aux_Systmes_et_Logiciels_Embarqus rdf:type owl:NamedIndividual , SI:Informatique, SI:Embarque ;
+	SI:Responsable SI:Lavirotte_Stphane ;
+	SI:Intitule "Introduction aux Systèmes et Logiciels Embarqués"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Quel point commun y-a-til entre une smart watch, des google glass, un aspirateur Roomba, un drone volant, un robot bipède Nao...? Tous sont des systèmes embarqués, même sils reposent sur des technologies différentes. Ce cours a pour
+                    but de présenter les différents aspects logiciels liés à ces systèmes embarqués omniprésents dans notre vie quotidienne. Ce module a pour but de présenter tant les problématiques des systèmes que des logiciels pour le déploiement sur
+                    des cibles embarquées. Après une présentation rapide des différents éléments dun système embarqué (noyau et système dexploitaion ou simplement programme sur un micro-contrôleur), nous étudierons dans ce cours les spécificités logicielles
+                    de ces systèmes: systèmes embarqués avec et sans système dexploitation, déploiement dun système sur une cible particulière (cross-compilation), optimisation dun système et des applications pour tenir compte des contraintes des plateformes
+                    embarquées (consommation énergétique, emprunte mémoire, propriétés temps réel...). Nous illustrerons ces différentes problématiques à laide de plateformes embarquées grand public (Arduino, Raspberry Pi, ...). Nous découvrirons la
+                    matrise des environnements pour la production de systèmes embarqués et des logiciels (Linux Yocto, Buildroot, Crosstool-ng, OpenWrt, ...) nécessaires à lexploitation de ces plateformes. Nous testerons aussi des cas dutilisation dun
+                    système embarqué avec quelques capteurs et actionneurs.
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Introduction__larchitecture_logicielle rdf:type owl:NamedIndividual , SI:Architecture, SI:Informatique ;
+	SI:Responsable SI:Mosser_Sbastien ;
+	SI:Intitule "Introduction à l'architecture logicielle"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Ce cours est une introduction à larchitecture logicielle qui illustre la mise en oeuvre dune architecture n-tiers impliquant plusieurs langages. Il introduit les notions de composants logiciels, dinjection de dépendances, dinteropérabilité
+                    et de travail aux interfaces.
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Jeu_dentreprise rdf:type owl:NamedIndividual , SI:Gestion ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "Jeu d'entreprise"@fr ;
+	SI:ECTS 1.0 ;
+	SI:Horaires_Cours 16 ;
+	SI:Horaires_Personnel 8 ;
+	SI:Resume "Le jeu d’entreprise permet de mettre en œuvre les concepts théoriques vus en cours, d’être sensibilisé à la gestion d’entreprise, à la performance, à la rentabilité et de comprendre l’intérêt de prévisions fiables.Cet outil pédagogique
+                    permet de développer des savoirs-faires spécifiques
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:LV2_s8 rdf:type owl:NamedIndividual , SI:Anglais_Renforce, SI:Anglais, SI:Langues ;
+	SI:Responsable SI:Storey_Franoise ;
+	SI:Intitule "LV2 s8"@fr ;
+	SI:ECTS 1.5 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Resume "Langue vivante 2: létudiant continue détudier la langue quil avait choisie en S6 (ou continue en anglais renforcé). Etude de la langue (toutes compétences), culture du pays, culture dentreprise, le cv dans la langue du pays, préparation
+                    à la mobilité. Anglais renforcé: préparation à la certification.
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Programmation_fonctionnelle rdf:type owl:NamedIndividual , SI:Fonctionelle, SI:Object, SI:Prodedurale, SI:Programmation ;
+	SI:Responsable SI:Gallesio_Erick ;
+	SI:Intitule "Programmation fonctionnelle"@fr ;
+	SI:ECTS 1.0 ;
+	SI:Horaires_Cours 6 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Horaires_TD 9 ;
+	SI:Resume "Ce cours montre les grands principes de la programmation fonctionnelle. Le langage support pour le cours et les TD est le langage Scheme (un dialecte de Lisp).
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Programmation_logique_par_contraintes rdf:type owl:NamedIndividual , SI:Fonctionelle, SI:Logique, SI:Object, SI:Prodedurale, SI:Programmation ;
+	SI:Responsable SI:Rueher_Michel ;
+	SI:Intitule "Programmation logique par contraintes"@fr ;
+	SI:ECTS 1.0 ;
+	SI:Horaires_Cours 6 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Horaires_TD 9 ;
+	SI:Resume "Introduction à la programmation logique et à la programmation logique par contraintes"^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Programmation_parallle rdf:type owl:NamedIndividual , SI:Algorithmique, SI:Fonctionelle, SI:Object, SI:Prodedurale, SI:Programmation ;
+	SI:Responsable SI:Fillatre_Lionel ;
+	SI:Intitule "Programmation parallèle"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Savoir paralléliser un algorithme et programmer plusieurs processeurs pour réaliser un traitement."^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Projet_Semestre_8_projet_innovation rdf:type owl:NamedIndividual , SI:Projet ;
+	SI:Responsable SI:Mosser_Sbastien ;
+	SI:Intitule "Projet Semestre 8: projet innovation"@fr ;
+	SI:ECTS 4.0 ;
+	SI:Horaires_Cours 100 ;
+	SI:Horaires_Personnel 32 ;
+	SI:Resume "Ce projet de 3 semaines permet aux étudiants de spécifier un développement logiciel innovant, et de mettre en oeuvre cette spécification dans un esprit start-up.
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Ralit_augmente rdf:type owl:NamedIndividual , SI:Mathematiques, SI:Ihm ;
+	SI:Responsable SI:Fillatre_Lionel ;
+	SI:Intitule "Réalité augmentée"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Enseignement des techniques modernes de la vision par ordinateur et des fondements des interfaces gestuelles."^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Rseaux_avancs_et_intergiciel rdf:type owl:NamedIndividual , SI:Securite, SI:Cryptographie, SI:Management, SI:Reseau ;
+	SI:Responsable SI:Lopez_Dino ;
+	SI:Intitule "Réseaux avancés et intergiciel"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Les applications distribuées ont besoin de mécanismes dinteractions spécialement conçus pour être exécutés dans des environnements hétérogènes et sur de systèmes différents. Lensemble de ces mécanismes d’interaction, appelé la couche
+                    intergicielle, repose sur des protocoles réseaux dont elle doit bénéficier et quelle doit exploiter au maximum, afin de fournir les services de fiabilité ou encore de sécurité demandés par les applications. Ce cours divisé en 2 parties
+                    étudie dune part les services offerts par les protocoles de transport (tels que les mécanismes de fiabilité, récupération derreurs, partage et management de ressources); les mécanismes d’interconnexion par le biais du routage statique
+                    et dynamique; ainsi que la performance du réseau en fonction de linfrastructure sous-jacente (filaire ou sans-fil). D autre part, ce cours vise à faire comprendre la façon dont un intergiciel permet, au-dessus de protocoles réseau
+                    adéquats, doffrir un support dexécution approprié pour des applications réparties. Les propriétés offertes sont par exemple: sécurisation des communications, support à lexécution concurrente dactivités sur un nœud, transmission
+                    fiable synchrone ou asynchrone des messages applicatifs, interopérabilité entre activités réparties et décrites dans différents langages, nommage et localisation dactivités réparties, etc. Les intergiciels utilisés, sont par exemple
+                    (liste non exhaustive) la plateforme Java RMI, le bus à objets CORBA, le bus à messages JMS.
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Roudier_Yves rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "yves.roudier@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Roudier"^^xsd:string ;
+	SI:Prenom "Yves"^^xsd:string .
+
+SI:Securit_logicielle rdf:type owl:NamedIndividual , SI:Informatique ;
+	SI:Responsable SI:Roudier_Yves ;
+	SI:Intitule "Securité logicielle"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Semestre 8 .
+
+SI:Tigli_Jean-Yves rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Tigli"^^xsd:string ;
+	SI:Prenom "Jean-Yves"^^xsd:string .
+
+SI:Service_Oriented_Computing_WS rdf:type owl:NamedIndividual , SI:Communication, SI:Web ;
+	SI:Responsable SI:Tigli_Jean-Yves ;
+	SI:Intitule "Service Oriented Computing /WS"@fr ;
+	SI:ECTS 1.0 ;
+	SI:Horaires_Cours 6 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Horaires_TD 9 ;
+	SI:Resume "Ce cours introduit le concept de service logiciel et les deux grandes approches pour le développement dapplication orientée service (SOA, ROA). Ce cours sappuie sur une double démarche pédagogique : - placer dans lévolution historique
+                    du Web lapparition des services Web - décomposer le concept abstrait de service selon un modèle unifié et présenter ses déclinaisons technologiques. Dans ce cadre les deux technologies le plus populaires du domaine sont détaillées
+                    et expliquées : - les Web Services RESTFul - les Web Services WS-SOAP du W3C Le modèle unifié présenté est ensuite illustré par lenvironnement de développement de services Windows Communication Foundation du framework .Net. Chacune
+                    des notions, donne lieu à des Travaux Pratiques pour en assurer la maîtrise et mettre en avant lavantage prépondérant dune application distribuée développée avec des services : linteropérabilité.
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Stage_EPU4 rdf:type owl:NamedIndividual , SI:Mathematiques, SI:Stage ;
+	SI:Responsable SI:Precioso_Frdric ;
+	SI:Intitule "Stage EPU4"@fr ;
+	SI:ECTS 5.0 ;
+	SI:Resume "Ce stage, dune durée minimum de 8 semaines, doit permettre à lélève de participer à la réalisation dune ou plusieurs missions. Les tâches confiées à lélève en stage peuvent être dordre technique, scientifique ou organisationnel. Lélève
+                    doit cependant être associé aux phases détude/analyse/schéma daction, ainsi quà lexploitation des informations et résultats auxquels il aura contribué. Cela doit lui permettre de faire le lien entre les connaissances et savoir-faire
+                    acquis pendant le cursus scolaire et universitaire et leur mise en oeuvre en situation professionnelle. Les élèves sont encouragés à effectuer ce stage à létranger.
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:Valorisation_des_donnes rdf:type owl:NamedIndividual , SI:BDD, SI:RDBS, SI:SciencesDesDonnees ;
+	SI:Responsable SI:Fillatre_Lionel ;
+	SI:Intitule "Valorisation des données"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 18 ;
+	SI:Resume "Découvrir les outils de base pour valoriser des données. La valorisation des données comprend plusieurs étapes : lacquisition, la traitement et laffichage.
+                "^^xsd:string ;
+	SI:Semestre 8 .
+
+SI:NULL rdf:type owl:NamedIndividual , SI:Cours ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "NULL"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Semestre 9 .
+
+SI:Adaptation_des_Interfaces__lenvironnement rdf:type owl:NamedIndividual , SI:Ihm ;
+	SI:Responsable SI:Dery_Anne-Marie ;
+	SI:Intitule "Adaptation des Interfaces à l'environnement"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce module a pour but de présenter aux étudiants la problématique de l’adaptation des IHM aux usages. Comment peut-on faire évoluer une IHM existante face aux changements de supports (passage dune station à un smartphone par exemple) ,
+                    d’utilisateurs (dun utilisateur novice à un utilisateur expert, par exemple) ou de contexte d’usage (environnement extérieur lumineux/sombre, environnement bruyant, par exemple). Ce vaste problème est un des enjeux majeurs des développeurs
+                    d’IHM du futur, le coût de développement étant conséquent à chaque évolution, les entreprises cherchent à optimiser le développement commun réutilisable.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Administration_Rseau rdf:type owl:NamedIndividual , SI:Gestion, SI:Informatique, SI:Reseau ;
+	SI:Responsable SI:Lopez_Dino ;
+	SI:Intitule "Administration Réseau"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce module permet aux étudiants de comprendre les mécanismes sous-jacents des services quun administrateur réseaux doit fournir régulièrement (DHCP, DNS, SMTPS, IMAPS, gestion des utilisateurs) ainsi que leur mise en place. Ce module vise
+                    également à faire comprendre la complexité de problèmes de configuration des équipements réseaux. De plus, ce module introduit lutilisation des logiciels de surveillance : de lutilisation dun simple sniffer jusquà la manipulation
+                    de logiciels plus complexes utilisant de protocoles tel que SNMP et Netflow.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Baude_Franoise rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "baude@unice.fr"^^xsd:string ;
+	SI:Nom "Baude"^^xsd:string ;
+	SI:Prenom "Françoise"^^xsd:string .
+
+SI:Algorithmic_approach_to_distributedsystems rdf:type owl:NamedIndividual , SI:BigData, SI:Communication ;
+	SI:Responsable SI:Baude_Franoise ;
+	SI:Intitule "Algorithmic approach to distributedsystems"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "On aborde les problèmes de coordination dun ensemble de processus asynchrones et répartis, nécessitant la représentation du temps et son utilisation dans un cadre réparti. Les problèmes résolus sont typiquement: élection dun processus,
+                    communication de groupe, détection de propriétés globales (absence dinterblocage, terminaison), consensus, détection et reprise sur panne, exclusion mutuelle.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Coudert_David rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Coudert"^^xsd:string ;
+	SI:Prenom "David"^^xsd:string .
+
+SI:Algorithms_for_telecommunication_networks rdf:type owl:NamedIndividual , SI:BigData, SI:Management, SI:Mathematiques, SI:Reseau ;
+	SI:Responsable SI:Coudert_David ;
+	SI:Intitule "Algorithms for telecommunication networks"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "The lectures will present problems arising in the design of telecommunication networks considered by operators like Orange or manufacturers like Alcatel. There will be two kinds of networks studied including optical WDM networks with MPLS
+                    management and wireless radio networks. In both cases environmental aspects like minimization of energy will be considered. Examples of such problems are tunnels in MPLS, multicasting, WIFI access, gathering in radio networks, placement
+                    of access points, fault tolerant on board satellite networks. For each problem we will show how to give simple models to tackle them. Then we will introduce algorithmic tools to solve them. All these problems being difficult, we will
+                    emphasize approximation algorithms, dynamic programming and heuristics. We will also present some basics of distributed algorithms. These studies will widely use the tools in graph theory and combinatorial optimization presented in
+                    Graph algorithms and combinatorial optimization
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Analyse_de_donnes_en_environnement_htrogne rdf:type owl:NamedIndividual , SI:AnalyseDeDonnees ;
+	SI:Responsable SI:Baude_Franoise ;
+	SI:Intitule "Analyse de données en environnement hétérogène"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 20 ;
+	SI:Horaires_Personnel 14 ;
+	SI:Horaires_TD 27 ;
+	SI:Semestre 9 .
+
+SI:Analyse_et_indexation_dimages_et_de_videos_dans_de_grands_systmes_multimedia rdf:type owl:NamedIndividual , SI:AnalyseDeDonnees, SI:BDD, SI:RDBS, SI:SciencesDesDonnees ;
+	SI:Responsable SI:Precioso_Frdric ;
+	SI:Intitule "Analyse et indexation d'images et de videos dans de grands systèmes multimedia"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce cours vise à parcourir les différents mécanismes mis en œuvre dans un moteur de recherche de contenu multimédia : extraction de primitives visuelles (Harris corner, SIFT), descripteurs locaux (de type SIFT), représentation des images
+                    par « sac de mots », apprentissage par un SVM à noyau de classes d’images et extension à la classification de séquences vidéos. La partie réalisation de ce cours vise à la réalisation d’un moteur de recherche dans une base d’images
+                    dans un contexte multi-classes. On explore aussi comment étendre ce système à une base de vidéos.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Anglais_Financier rdf:type owl:NamedIndividual , SI:Anglais_Renforce, SI:Anglais ;
+	SI:Responsable SI:Storey_Franoise ;
+	SI:Intitule "Anglais Financier"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 18 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 19 ;
+	SI:Resume "This course has two main objectives: To prepare students for recruitment in English (CV , job interviews) To introduce the students to the specific vocabulary and structures of Financial English
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Anglais_IFI rdf:type owl:NamedIndividual , SI:Anglais_Renforce, SI:Anglais ;
+	SI:Responsable SI:Storey_Franoise ;
+	SI:Intitule "Anglais IFI"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Resume "The main theme of this course is to prepare students for the international job market by providing targeted practice in interview techniques and by reviewing or creating professional documents involved in job applications. It aims to consolidate
+                    and extend the skills acquired in the first two years in the school. Grammar and vocabulary will be reviewed as necessary, together with pronunciation practice. Workshop activities and pair-work will be organized in order to allow
+                    students to work at their own levels.
+
+
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Hugues_Anne-Marie rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "hugues@unice.fr"^^xsd:string ;
+	SI:Nom "Hugues"^^xsd:string ;
+	SI:Prenom "Anne-Marie"^^xsd:string .
+
+SI:Applications_relationnelles_pour_le_web rdf:type owl:NamedIndividual , SI:RDBS, SI:Web ;
+	SI:Responsable SI:Hugues_Anne-Marie ;
+	SI:Intitule "Applications relationnelles pour le web"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 14 ;
+	SI:Horaires_Personnel 12 ;
+	SI:Horaires_TD 14 ;
+	SI:Semestre 9 .
+
+SI:Hermenier_Fabien rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "fabien.hermenier@unice.fr"^^xsd:string ;
+	SI:Nom "Hermenier"^^xsd:string ;
+	SI:Prenom "Fabien"^^xsd:string .
+
+SI:Architecture_logicielle_pour_le_cloud_computing rdf:type owl:NamedIndividual , SI:Architecture, SI:BDD, SI:Gestion, SI:Informatique, SI:RDBS ;
+	SI:Responsable SI:Hermenier_Fabien ;
+	SI:Intitule "Architecture logicielle pour le cloud computing"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce cours vise à promouvoir les architecture logicielles propres aux applications hébergées sur un cloud publique. Après un rappel des différents composants dune infrastructure cloud, ce cours mettra dabord laccent sur des modèles de
+                    gestion des données, alternatifs au modèle relationnel, mais pourtant plus adaptés aux besoins de dynamicité et de passage à léchelle des applications cloud (mouvement NoSQL, base de données objets et colonnes, caches, ...) Ce cours
+                    présentera ensuite des outils et des environnements logiciels facilitant le développement, le déploiement mais également lauto-adaptation dapplications hébergées dans sur cloud publique.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Architectures_Logicielles rdf:type owl:NamedIndividual , SI:Architecture, SI:Mathematiques ;
+	SI:Responsable SI:Molines_Guilhem ;
+	SI:Intitule "Architectures Logicielles"@fr ;
+	SI:ECTS 4.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 32 ;
+	SI:Horaires_TD 28 ;
+	SI:Resume "La réalité des systèmes informatiques dans le monde industriel est caractérisée par une grande hétérogénéité des technologies et produits composant leur architecture et souvent, par la coexistence imposée de technologies de générations
+                    différentes, qui contraste avec les outils « académiquement corrects » utilisés au cours dun cursus. Ce cours a pour but dappréhender cette hétérogénéité des architectures réelles en - proposant une typologie en grandes familles
+                    sous forme de panorama - approfondissant, via des exposés, des points technologiques clés utilisés dans ces architecures - proposant une méthodologie délaboration darchitecture complexe - présentant des retours dexpérience de mise
+                    en oeuvre darchitectures réelles dans un contexte industriel - mettant en pratique ces connaissances à loccasion dun mini-projet délaboration dune architecture complexe, assortie dun Proof Of Concept
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Assurance rdf:type owl:NamedIndividual , SI:Cours ;
+	SI:Responsable SI:Baude_Franoise ;
+	SI:Intitule "Assurance"@fr ;
+	SI:ECTS 4.0 ;
+	SI:Horaires_Cours 48 ;
+	SI:Horaires_Personnel 8 ;
+	SI:Horaires_TD 23 ;
+	SI:Resume "Théorie du risque et mesure du risque, Contrats dassurance; Calcul actuariel –- (Marius Akre)"^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:CART_and_random_forests_for_high_dimensional_data rdf:type owl:NamedIndividual , SI:BigData, SI:SciencesDesDonnees ;
+	SI:Responsable SI:Baude_Franoise ;
+	SI:Intitule "CART and random forests for high dimensional data"@fr ;
+	SI:ECTS 4.0 ;
+	SI:Horaires_Cours 15 ;
+	SI:Horaires_Personnel 15 ;
+	SI:Horaires_TD 30 ;
+	SI:Semestre 9 .
+
+SI:Antonini_Marc rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "am@i3s.unice.fr"^^xsd:string ;
+	SI:Nom "Antonini"^^xsd:string ;
+	SI:Prenom "Marc"^^xsd:string .
+
+SI:Compression_analyse_et_visualisation_de_contenus_multimdia rdf:type owl:NamedIndividual , SI:AnalyseDeDonnees, SI:Mathematiques ;
+	SI:Responsable SI:Antonini_Marc ;
+	SI:Intitule "Compression, analyse et visualisation de contenus multimédia."@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce cours vise à présenter les différentes méthodes de compression de masses de données multimédia telles que les images et les vidéo. On présentera les différents outils multimédia modernes de compression. En particulier, on sintéressera
+                    aux standards JPEG et JPEG200 ainsi quau nouveau codeur HEVC pour la vidéo à Ultra Haute Définition. Limagerie 3D (multi-vues, holoscopie et holographie) sera aussi abordée. Des implémentations GPGPU seront proposées pour la visualisation
+                    de ce type de données massives.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Conception_et_valuation_des_IHM rdf:type owl:NamedIndividual , SI:Conception, SI:Informatique, SI:Ihm ;
+	SI:Responsable SI:Dery_Anne-Marie ;
+	SI:Intitule "Conception et évaluation des IHM"@fr ;
+	SI:ECTS 4.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 32 ;
+	SI:Horaires_TD 28 ;
+	SI:Resume "L’Interaction Humain-Machine (IHM) est la discipline informatique dédiée à la conception et à l’évaluation de systèmes informatiques interactifs destinés à des utilisateurs humains opérant dans un contexte donné. La prise en compte de
+                    l’utilisateur et de son contexte est un aspect crucial de la démarche IHM. Cet enseignement forme des étudiants en informatique à cette démarche. Le module forme également les étudiants à la pluridisciplinarité indispensable à la bonne
+                    réalisation d’une application IHM.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Sassatelli_Lucille rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "sassatelli@i3s.unice.fr"^^xsd:string ;
+	SI:Nom "Sassatelli"^^xsd:string ;
+	SI:Prenom "Lucille"^^xsd:string .
+
+SI:Content_Distribution_in_Wireless_Networks rdf:type owl:NamedIndividual , SI:BigData, SI:Reseau, SI:SciencesDesDonnees ;
+	SI:Responsable SI:Sassatelli_Lucille ;
+	SI:Intitule "Content Distribution in Wireless Networks"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "In this course, we will consider the problem of content distribution in a variety of wireless networks: mobile networks, satellite networks and ad hoc networks. The focus will be either on transferring large volumes of data or replicating
+                    data on a large number of clients. In addition, the services considered might have real time constraints like video streaming over mobile phones. For each environment, we will introduce the actors at play at different level of the
+                    protocol stack from the MAC to the application layer. Next we will review the challenges and possible solutions, e.g., adequate transport layers in satellite network, network coding for ad hoc networks or application/OS adaptations
+                    at the client or server side in the case of streaming over mobile networks.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Martin_Bruno rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "bmartin@unice.fr"^^xsd:string ;
+	SI:Nom "Martin"^^xsd:string ;
+	SI:Prenom "Bruno"^^xsd:string .
+
+SI:Cryptographie_et_Scurit rdf:type owl:NamedIndividual , SI:Securite, SI:Cryptographie ;
+	SI:Responsable SI:Martin_Bruno ;
+	SI:Intitule "Cryptographie et Sécurité"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce cours illustre l’utilisation de la cryptographie pour construire des mécanismes de sécurité. Après un bref rappel des chiffres à clé secrète et à clé publique, nous décrirons comment on peut les combiner pour assurer les principaux
+                    services de sécurité : confidentialité ; intégrité ; authentification. Nous présenterons protocoles sécurisés courants : Kerberos, SSL, WEP, WPA et nous en étudierons à la fois la construction et les limites. Nous nous attacherons
+                    autant à l’aspect formel de certaines attaques sur ces protocoles qu’aux aspects pratiques. Nous tenterons d’introduire également la notion de sécurité prouvée qui permet de répondre à la question: mon chiffre est-il sûr ?
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Boudaoud_Karima rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Boudaoud"^^xsd:string ;
+	SI:Prenom "Karima"^^xsd:string .
+
+SI:Cybersecurite rdf:type owl:NamedIndividual , SI:Securite, SI:Cryptographie ;
+	SI:Responsable SI:Boudaoud_Karima ;
+	SI:Intitule "Cybersecurite"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce cours concerne essentiellement la cybersécurité, cybercriminalité et investigation numériques."^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Data_Science rdf:type owl:NamedIndividual , SI:BigData, SI:Management, SI:SciencesDesDonnees ;
+	SI:Responsable SI:Fillatre_Lionel ;
+	SI:Intitule "Data Science"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Donner aux étudiants une bonne connaissance des principaux domaines dapplication du traitement numérique des images et des vidéos et les préparer aux métiers associés.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Neglia_Giovanni rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "giovanni.neglia@sophia.inria.fr"^^xsd:string ;
+	SI:Nom "Neglia"^^xsd:string ;
+	SI:Prenom "Giovanni"^^xsd:string .
+
+SI:Distributed_Optimization_and_Games rdf:type owl:NamedIndividual , SI:BigData, SI:Mathematiques, SI:Programmation, SI:Reseau ;
+	SI:Responsable SI:Neglia_Giovanni ;
+	SI:Intitule "Distributed Optimization and Games"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "The focus of this course is on networks interconnecting decision making elements, whose collective behavior depends on a compilation of local decisions that are based on partial information about each other and the state of the system.
+                    These elements may have a common goal, or private (and often conflicting) ones. The course presents the theoretical foundations that allow to study and design such systems.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Environnements_Logiciels_pour_la_Programmation_Avance_de_Terminaux_Mobiles rdf:type owl:NamedIndividual , SI:Fonctionelle, SI:Informatique, SI:Object, SI:Prodedurale, SI:Programmation ;
+	SI:Responsable SI:Tigli_Jean-Yves ;
+	SI:Intitule "Environnements Logiciels pour la Programmation Avancée de Terminaux Mobiles"@fr ;
+	SI:ECTS 4.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 32 ;
+	SI:Horaires_TD 28 ;
+	SI:Resume "Aujourd’hui, l’Informatique Mobile est déjà au cœur de nombreuses applications logicielles basées sur la localisation des utilisateurs (GPS, ...) et l’accès aux services par des terminaux utilisateurs spécifiques (bornes interactives,
+                    PDA, tablettes PC, téléphones mobiles, tables interactives...). Le grand nombre de cibles se distinguent alors par de nombreuses variantes matérielles que les standards logiciels ont encore du mal à masquer. Ce constat est par exemple
+                    à l’origine de coûts additionnels importants pour le portage des applications entre cibles mobiles et notamment pour la réalisation d’interfaces. Ce cours a donc pour objectif d’introduire au travers des exemples du marché des plateformes
+                    mobiles, les principales variantes logicielles du domaine.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Dabbous_Walid rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "dabbous@sophia.inria.fr"^^xsd:string ;
+	SI:Nom "Dabbous"^^xsd:string ;
+	SI:Prenom "Walid"^^xsd:string .
+
+SI:Evolving_Internet rdf:type owl:NamedIndividual , SI:Architecture, SI:Reseau ;
+	SI:Responsable SI:Dabbous_Walid ;
+	SI:Intitule "Evolving Internet"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "The Internet has grown from a research curiosity to something we all rely on daily. It has been able to withstand rapid growth fairly well and its core protocols have been robust enough to accommodate numerous applications that were unforeseen
+                    by the original Internet designers. Evolving Internet (EI) will concentrate on the evolution of Internet architecture and protocols. We will focus on routing and congestion control (transport issues in general) and explain how they
+                    function and how they have evolved over the years since the Internet creation. The course will start by an overview of the Internet architecture, then digs into the details of the routing and transport protocols, especially from the
+                    point of view of their evolution and the way they managed to overcome the different changes that the Internet has faced: expansion, mobility, heterogeneity, etc.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Finance rdf:type owl:NamedIndividual , SI:Cours ;
+	SI:Responsable SI:Baude_Franoise ;
+	SI:Intitule "Finance"@fr ;
+	SI:ECTS 4.0 ;
+	SI:Horaires_Cours 54 ;
+	SI:Horaires_Personnel 20 ;
+	SI:Horaires_TD 37 ;
+	SI:Resume "Cet enseignement constitue une introduction à la finance de marché. On aborde le marché des taux d’intérêt ; le marché des produits dérivés, le thème de la décision ;les modèles d’équilibre du portefeuille.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:De_Simone rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "Robert.de_Simone@inria.fr"^^xsd:string ;
+	SI:Nom "De"^^xsd:string ;
+	SI:Prenom "Simone"^^xsd:string .
+
+SI:Formal_Models_of_Computation_for_the_era_of_Systems_and_Networks_on_Chip rdf:type owl:NamedIndividual , SI:Programmation, SI:Reseau, SI:Embarque ;
+	SI:Responsable SI:De_Simone ;
+	SI:Intitule "Formal Models of Computation for the era of Systems and Networks on Chip"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "On présentera les récentes topologies darchitectures matérielles massivement multi-cœurs (manycores), disposant de réseaux sur puce complexes. On sattachera ensuite à présenter des formalismes de modélisation dapplication, issus de
+                    lInformatique Théorique. Enfin on montrera lutilité des seconds pour la compilation efficace vers les premières.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Fouilles_de_donnes rdf:type owl:NamedIndividual , SI:Mathematiques, SI:SciencesDesDonnees ;
+	SI:Responsable SI:Precioso_Frdric ;
+	SI:Intitule "Fouilles de données"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "La fouille de données est focalisée sur les données précédemment stockées par des processus divers, éventuellement dans un entrepôt ; ces données sont réutilisées pour exploration par des techniques danalyse qui permettent de mettre à
+                    jour et restituer des connaissances sur des phénomènes inconnus ou oubliés. Au travers des multiples tentatives pour caractériser ce domaine, on peut retenir quatre objectifs fondamentaux qui justifient la métaphore de lextraction
+                    et de la transformation de minerai : - fouiller, creuser, extraire ce qui est caché - prendre en compte le volume de données - transformer des données brutes en connaissances expertes - fournir des connaissances précieuses car nouvelles,
+                    valides et utiles à un utilisateur expert
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Legout_Arnaud rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "Arnaud.Legout@sophia.inria.fr"^^xsd:string ;
+	SI:Nom "Legout"^^xsd:string ;
+	SI:Prenom "Arnaud"^^xsd:string .
+
+SI:From_bit_torrent_to_privacy rdf:type owl:NamedIndividual , SI:Securite, SI:Cryptographie ;
+	SI:Responsable SI:Legout_Arnaud ;
+	SI:Intitule "From bit torrent to privacy"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "BitTorrent is the most popular peer-to-peer file replication protocol and the second most popular protocol in the Internet. It is daily used by tens of millions of users and is therefore a perfect candidate for large scale privacy attacks,
+                    whose goal is to retrieve personal information on those users. The goal of this course, using BitTorrent as a use case, is to show that such attacks are possible on any peer-to-peer systems. In particular, we will explore design choices
+                    that make such attacks possible.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Mathieu_Pierre rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "mathieu@unice.fr"^^xsd:string ;
+	SI:Nom "Mathieu"^^xsd:string ;
+	SI:Prenom "Pierre"^^xsd:string .
+
+SI:Gestion_de_donnes_multimedia rdf:type owl:NamedIndividual , SI:AnalyseDeDonnees, SI:Gestion, SI:Informatique, SI:Object, SI:Programmation, SI:SciencesDesDonnees ;
+	SI:Responsable SI:Mathieu_Pierre ;
+	SI:Intitule "Gestion de données multimedia"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Il sagit de montrer aux étudiants les spécificités de la transmission de signaux multimédia. Le module est décomposé en deux temps. Une première partie sous forme de cours qui décrit la problématique et les solutions mises en œuvre puis
+                    une seconde sous forme de TD qui permet dexpérimenter avec des logiciels et matériels professionnels. La problématique de ce type de transmission est analysée afin de permettre daugmenter la cohérence de la solution et conduire à
+                    une bonne adaptation du codec, des débits et de la qualité à lapplication envisagée.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Nisse_Nicolas rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Nisse"^^xsd:string ;
+	SI:Prenom "Nicolas"^^xsd:string .
+
+SI:Graph_algorithms_and_combinatorial_optimization rdf:type owl:NamedIndividual , SI:Mathematiques, SI:Reseau ;
+	SI:Responsable SI:Nisse_Nicolas ;
+	SI:Intitule "Graph algorithms and combinatorial optimization"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "The lectures will present the basic notions of Discrete Mathematics and Combinatorial Optimization. We will focus on two important problems, namely Network Flows and their applications to connectivity, and Graph Coloring. Through these
+                    two problems, we will give the basic notions of Algorithmic, Computational Complexity and Graph Theory. During the second part of the lecture, we will present an introduction to Linear Programming and duality, revisiting Flows and
+                    Coloring Problems.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Green_networking rdf:type owl:NamedIndividual , SI:BigData, SI:Reseau, SI:SciencesDesDonnees ;
+	SI:Responsable SI:Lopez_Dino ;
+	SI:Intitule "Green networking"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Energy becomes a major concern in Information Technology. In this course, we will focus on the problem of reducing the share of the network of energy consumption in IT. This course will start with an overview of the challenges related
+                    to energy reduction. Next, we will consider a set of specific problems pertaining to the routing and transport layer as well to the different parts of modern networks: wireless access networks, core networks of ISP and data centers.
+                    For each problem, we will focus either on practical challenges, e.g. what is the cost to pay in practice to have a fully functional green routing protocol or theoretical challenges, e.g., how to jointly account for energy reduction
+                    and load variations in an ideal routing algorithm.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Alliez_Pierre rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Alliez"^^xsd:string ;
+	SI:Prenom "Pierre"^^xsd:string .
+
+SI:Ingnierie_3D rdf:type owl:NamedIndividual , SI:Fonctionelle, SI:Mathematiques, SI:Object, SI:Prodedurale, SI:Programmation ;
+	SI:Responsable SI:Alliez_Pierre ;
+	SI:Intitule "Ingénierie 3D"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Le but de ce module est de présenter des problèmes géométriques sous langle algorithmique. On étudiera des structures de données et algorithmes géométriques jusquà leur programmation sur machine, avec un accent sur la complexité et les
+                    défis posés par les incertitudes numériques. La bibliothèque C++ CGAL (www.cgal.org) sera utilisée pour passer à la pratique. Domaines dapplications: multimédia, retro-ingénierie et ingénierie numérique.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Ingnierie_des_connaissances rdf:type owl:NamedIndividual , SI:Mathematiques ;
+	SI:Responsable SI:Faron_Zucker ;
+	SI:Intitule "Ingénierie des connaissances"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "De plus en plus dentreprises ou de communautés expriment le besoin de représenter, dorganiser, daccéder et de raisonner sur les connaissances de leur domaine, de leurs membres, relatives à leurs centres dintérêt, leurs activités. Ce
+                    module est consacré à létude et à la mise en oeuvre de différents modèles de représentation et techniques permettant de capitaliser les connaissances, notamment sous la forme dontologies, et de raisonner sur ces connaissances.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Ingnierie_des_modles_et_langages_Spcifiques_aux_Domaines rdf:type owl:NamedIndividual , SI:Cours ;
+	SI:Responsable SI:Mosser_Sbastien ;
+	SI:Intitule "Ingénierie des modèles et langages Spécifiques aux Domaines"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce cours sintéresse à lIngénierie des Modèles, du point de vue de la définition de langage spécifique aux domaines. En utilisant un méta-modèle pour capturer un domaine applicatif, les étudiants définissent un nouveau langage dédié
+                    aux experts du domaine capturé. Des techniques de génération de code sont alors utilisées pour atteindre des plateformes dexécution classique.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Interfaces_Tactiles rdf:type owl:NamedIndividual , SI:Ihm ;
+	SI:Responsable SI:Dery_Anne-Marie ;
+	SI:Intitule "Interfaces Tactiles"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Cet enseignement présente la particularité des interfaces tactiles sur supports variés tels que la table surface, des tablettes et des smartphones.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Interfaces_rparties_sur_plusieurs_supports rdf:type owl:NamedIndividual , SI:Ihm ;
+	SI:Responsable SI:Dery_Anne-Marie ;
+	SI:Intitule "Interfaces réparties sur plusieurs supports"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Cet enseignement a pour but de concevoir et dimplémenter une application répartie multi supports. Les supports visés ont des spécificités différentes en terme dusage et d’interactions.Par exemple les tables surfaces supportent les interactions
+                    tactiles, sonores et tangibles, et favorisent la réalisation de tâches coopératives. Les smartphones et tablettes supportent les interactions tactiles, sonores, vibreurs; sont équipés de capteurs de localisation et de position et favorisent
+                    les tâches en mobilité.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Barakat_Chadi rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "Chadi.Barakat@sophia.inria.fr"^^xsd:string ;
+	SI:Nom "Barakat"^^xsd:string ;
+	SI:Prenom "Chadi"^^xsd:string .
+
+SI:Internet_Measurements_and_New_Architectures rdf:type owl:NamedIndividual , SI:Architecture, SI:Communication, SI:Reseau ;
+	SI:Responsable SI:Barakat_Chadi ;
+	SI:Intitule "Internet Measurements and New Architectures"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "We are experiencing an unprecedented success of the Internet, putting it and the diverse applications and services it provides at the center of our daily life. This success is accompanied however with two main observations. On one side,
+                    end users are getting less and less knowledgeable about the Internet structure and the way it works, hence losing control on the performance they get from the network. On another side, the network and the content providers are overwhelmed
+                    with the huge volume of content end users generate. This has motivated a large number of research work on trying to infer the structure and performance of the Internet by means of measurements, and on proposing new network paradigms
+                    that improve efficiency and flexibility by providing a native support for content-based communication and adding programmability to network elements. IMNA will cover this interesting and emerging research area. We will motivate and
+                    overview the different proposals that have been made in the literature for a better Internet transparency by means of passive and active measurements, and the main networking paradigms for the Internet of the Future, including in particular
+                    Information-Centric Networking (ICN) and Software Defined Networking (SDN).
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Interprtation_de_langages rdf:type owl:NamedIndividual , SI:Cours ;
+	SI:Responsable SI:De_Antoni ;
+	SI:Intitule "Interprétation de langages"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce cours présente des langages de modélisation existants tels que lUML et son utilisation dans des domaines spécifiques (gestion des exigences, description darchitecture, aspects temporels). Après un rappel sur lutilisation de ces modèles
+                    au sein dun processus de développement, laccent sera mis sur la mise en oeuvre de tels modèles dans des buts de simulation (animation de modèles, etc) ainsi que dans un but de vérification et validation. Ce cours offre un éclairage
+                    différent mais complémentaire à celui proposée en IDM1
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Intragir_dans_un_monde_3D rdf:type owl:NamedIndividual , SI:Mathematiques ;
+	SI:Responsable SI:Lingrand_Diane ;
+	SI:Intitule "Intéragir dans un monde 3D"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Le fil rouge consiste à construire une application permettant dacquérir une scène 3D, de la visualiser, de sy déplacer, de reconnaître des objets dans la scène, et de les manipuler.
+
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Montagnat_Johan rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "johan@i3s.unice.fr"^^xsd:string ;
+	SI:Nom "Montagnat"^^xsd:string ;
+	SI:Prenom "Johan"^^xsd:string .
+
+SI:Large_Scale_Distributed_Systems rdf:type owl:NamedIndividual , SI:BigData, SI:Reseau ;
+	SI:Responsable SI:Montagnat_Johan ;
+	SI:Intitule "Large Scale Distributed Systems"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Large scale distributed infrastructures leverage high performance networks to federate computing resources from multiple institutions. Distributed computing has become a critical tool in many scientific disciplines. This lecture describes
+                    the foundation of distributed computing infrastructures, including the main computing models exploited in Grids and Clouds to evolve from cluster computing towards virtualized resources and cross-institutional user communities.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Management rdf:type owl:NamedIndividual , SI:Management ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "Management"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 32 ;
+	SI:Horaires_Personnel 18 ;
+	SI:Resume "Le module doit permettre de développer des compétences en matière de raisonnement juridique et danalyser des situations pratiques en matière de management
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Middleware_for_Internet_of_Things rdf:type owl:NamedIndividual , SI:Communication, SI:MachineLearning, SI:Reseau, SI:Embarque ;
+	SI:Responsable SI:Tigli_Jean-Yves ;
+	SI:Intitule "Middleware for Internet of Things"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ubiquitous computing names the third wave in computing, just now beginning. First were mainframes, each shared by lots of people. Now we are in the personal computing era, person and machine staring uneasily at each other across the desktop.
+                    Next comes ubiquitous computing, when technology recedes into the background of our lives. Alan Kay of Apple calls this “Third Paradigm” computing. Friedemann Mattern, explains this trend from four technological reasons: miniaturization
+                    of devices, new materials, progress in communication technologies and better sensors. Anyway, ubiquitous computing introduces new challenges in the software engineering domain leading to numerous innovations for middleware.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Modles_mathmatiques_continus_en_finance_et_assurance rdf:type owl:NamedIndividual , SI:Mathematiques ;
+	SI:Responsable SI:Baude_Franoise ;
+	SI:Intitule "Modèles mathématiques continus en finance et assurance"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 45 ;
+	SI:Horaires_Personnel 43 ;
+	SI:Horaires_TD 34 ;
+	SI:Resume "Ce cours introduit les modèles mathématiques à temps continu utilisés en finance quantitative pour lévaluation doptions, la modélisation et lanalyse des risques en finance.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Miramond_Benoit rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "benoit.miramond@ensea.fr"^^xsd:string ;
+	SI:Nom "Miramond"^^xsd:string ;
+	SI:Prenom "Benoit"^^xsd:string .
+
+SI:Modlisation_et_conception_des_systmes_embarqus rdf:type owl:NamedIndividual , SI:Architecture, SI:Conception, SI:Informatique, SI:Reseau, SI:Embarque ;
+	SI:Responsable SI:Miramond_Benoit ;
+	SI:Intitule "Modélisation et conception des systèmes embarqués"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Les objets connectés, les systèmes mobiles, les réseaux de capteurs ou lélectronique de contrôle en automobile sont autant de membres de la même famille des systèmes embarqués qui nécessitent une conception à la fois logicielle et matérielle
+                    spécifique. Nous étudions dans ce module les méthodologies de conception faisant intervenir les problématiques des deux mondes pour renforcer les compétences transverses attendues en ingénierie des systèmes embarqués industriels. Nous
+                    illustrerons ce cours des méthodes de modélisation et des langages de description permettant dabstraire le système embarqué et son environnement. Nous suivrons une approche de raffinement successif de ces descriptions pour enfin aborder
+                    les problématiques de temps réel et de consommation des exécutifs embarqués sur des architectures SoC (System-on-Chip).
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Mthodes_numriques_pour_lvaluation_doptions_et_la_gestion_de_portefeuille rdf:type owl:NamedIndividual , SI:BDD, SI:Gestion, SI:RDBS ;
+	SI:Responsable SI:Baude_Franoise ;
+	SI:Intitule "Méthodes numériques pour l'évaluation d'options et la gestion de portefeuille"@fr ;
+	SI:ECTS 3.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Horaires_TD 19 ;
+	SI:Resume "En salle de marché, il ne suffit pas de savoir quil existe un prix doption par absence dopportunité darbitrage ou une stratégie optimale de gestion dun portefeuille donné. Il faut aussi calculer le prix et la stratégie de couverture
+                    correspondante, la stratégie optimale et la valeur optimale de portefeuille correspondante, ainsi que beaucoup dautres quantités essentielles imposées par le législateur, les traders ou la clientèle telles que les risques de position
+                    et les sensibilités aux facteurs de risques. - En pratique, pour être en mesure de calculer, il faut dabord choisir un modèle et en calibrer les paramètres. Le cours a pour but de donner quelques éléments de base de calibration implicite
+                    (à laide des valeurs actuelles du plus grand nombre possible de produits financiers) ou historique (à partir de données passées du marche). - On présente ainsi des briques de base de la statistique des processus de diffusion en insistant
+                    sur leurs vitesses de convergence et en se limitant aux modèles les plus simples (modèles de Black et Scholes pour les actions et de Vasicek pour les taux). - Une fois que le modèle est calibre, il faut calculer. On sintéresse donc
+                    aux méthodes de Monte-Carlo et, à nouveau, on met laccent sur les questions liées à la vitesse de convergence. - Enfin, on aborde lapproximation des modèles stochastiques en énonçant et en illustrant quelques résultats importants
+                    concernant la discrétisation des équations différentielles stochastiques.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Objets_Connects_et_services rdf:type owl:NamedIndividual , SI:Architecture, SI:Informatique, SI:Object, SI:Projet, SI:Embarque ;
+	SI:Responsable SI:Tigli_Jean-Yves ;
+	SI:Intitule "Objets Connectés et services"@fr ;
+	SI:ECTS 4.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 32 ;
+	SI:Horaires_TD 28 ;
+	SI:Resume "La miniaturisation des dispositifs informatiques et de télécommunication, le progrès des protocoles de communication, l’incorporation de ces fonctions dans des objets usuels devenus communicants voire intelligents (téléphones, lunettes,
+                    montres, ceintures, sacoches (Sideshow de Microsoft), vêtements ; équipements ménagers, automobiles, jouets comme lancien Nabaztag de la société Violet, produits  tracés  avec les RFIDs, etc.), sont les facteurs technologiques du
+                    secteur émergeant des nouvelles applications et services logiciels en Intelligence Ambiante. Ainsi chaque année à las Vegas de nouveaux objets insolites sont présentés lors du CES : le Consumer Electronics Show. Ce cours sappuie sur
+                    une approche pédagogique par projet. Il permet aux étudiants de se familiariser ou dapprofondir les différentes compétences nécessaires à la production dun objet connecté innovant (design plastique, intégration matérielle, développement
+                    logiciel embarqué, développement de services pour dispositifs) et son intégration dans une architecture orientée service pour la production dapplications multiservices multi-dispositifs. Les étudiants seront donc amenés à mener un
+                    tel projet à plusieurs tout au long du module. Les domaines dapplication ciblés sont alors définis selon les centres dintérêts des étudiants et des thématiques par promotion. Il pourra sagir, de la santé, de la maison, du bâtiment
+                    et de la ville intelligents, des transports, de lenvironnement et de la prévention des risques, de lassistance aux usagers en situation de mobilité ...
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Liquori_Luigi rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "Luigi.Liquori@inria.fr"^^xsd:string ;
+	SI:Nom "Liquori"^^xsd:string ;
+	SI:Prenom "Luigi"^^xsd:string .
+
+SI:Peer_to_peer rdf:type owl:NamedIndividual , SI:Architecture, SI:BigData, SI:Reseau, SI:SciencesDesDonnees ;
+	SI:Responsable SI:Liquori_Luigi ;
+	SI:Intitule "Peer to peer"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Since the early days of the internet, from the email to the Web, the client-server architecture has been used for data transfer. However, in a few years, the peer-to-peer architecture has changed our way to share information. At the present
+                    time, peer-to-peer communications account for between 60% to 90% of the internet traffic. The peer-to-peer architecture deployment has followed a rare model in the history of the internet. Whereas, most of the time, even the smallest
+                    improvement requires years of academic evaluations and experimentations, before a real large scale deployment, peer-to-peer systems were deployed at large scale based on an empirical process. The understanding of these new systems
+                    is fundamental today for anybody who wants to work in an area related to networking.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Alouf_Sara rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Alouf"^^xsd:string ;
+	SI:Prenom "Sara"^^xsd:string .
+
+SI:Performance_Evaluation_of_Networks rdf:type owl:NamedIndividual , SI:BigData, SI:Mathematiques, SI:Reseau, SI:Web ;
+	SI:Responsable SI:Alouf_Sara ;
+	SI:Intitule "Performance Evaluation of Networks"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "This course will expose the students to the basic concepts and tools used in probabilistic modeling, performance evaluation, optimization and control of large-scale computer networks and distributed systems. The course will cover the theory
+                    of Markov chains (discrete time, continuous time, irreducible, absorbing, birth and death processes) and the theory of queues (classical M/M/1, M/M/1/K, M/M/c, M/M/c/c, M/G/1) and product-form network of queues (Jackson networks, Kelly
+                    networks). Numerous applications will be studied throughout the class, such as the modeling of IEEE 802.11 and the modeling of Web servers.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Rezk_Tamara rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "tamara.rezk@sophia.inria.fr"^^xsd:string ;
+	SI:Nom "Rezk"^^xsd:string ;
+	SI:Prenom "Tamara"^^xsd:string .
+
+SI:Preuves_en_Cryptographie rdf:type owl:NamedIndividual , SI:Securite, SI:Cryptographie ;
+	SI:Responsable SI:Rezk_Tamara ;
+	SI:Intitule "Preuves en Cryptographie"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Semestre 9 .
+
+SI:Processus_Metier rdf:type owl:NamedIndividual , SI:Conception ;
+	SI:Responsable SI:Occello_Audrey ;
+	SI:Intitule "Processus Metier"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce module aborde lapproche visant à coupler BPM et SOA. Il se focalise particulièrement sur les phases d’analyse, de modélisation et de simulation. C’est dans ces phases « amont » que se joue la communication, essentielle, entre équipes
+                    métier et équipes techniques.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Buffa_Michel rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "buffa@polytech.unice.fr"^^xsd:string ;
+	SI:Nom "Buffa"^^xsd:string ;
+	SI:Prenom "Michel"^^xsd:string .
+
+SI:Programmable_web_-_client-side rdf:type owl:NamedIndividual , SI:BDD, SI:BigData, SI:Conception, SI:RDBS, SI:Reseau, SI:SciencesDesDonnees, SI:Web, SI:Ihm ;
+	SI:Responsable SI:Buffa_Michel ;
+	SI:Intitule "Programmable web - client-side"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Présenter des concepts “avancés” ou “émergents” des technologies web, notamment HTML5 et ses nombreuses nouveautés, mais également des tendances fortes comme les “webapps”, des applications proches des applications natives, ne tournant
+                    pas forcément dans un navigateur web, mais dans des “stores”. Egalement le développement d’applications multiparticipants synchrones exploitant les WebSockets de HTML5 ou le peer to peer via WebRTC (Web Real Time Communication, un
+                    standard du W3C). Renforcer les concepts de base qui sont toujours d’actualité pour le développement web : l’architecture MVC (côté client, on parle ici de MVC dans la conception des webapps) et la philosophie ReST (interface avec
+                    des web services comme ceux proposés par le cours “programmable web-server side) HTML5 = HTML (des tags, des attributs nouveaux) + CSS3 (très nombreux ajouts, notamment animations, transitions, transformations géométriques 2D et 3D,
+                    etc.) + JavaScript (+ de 30 nouvelles APIs implémentées ou en cours d’implémentation par les navigateurs) + de nombreux modules complémentaires, notamment pour les mobiles (voir http://www.w3.org/2014/01/mobile-web-app-state/), le
+                    jeu, la musique, etc. HTML5 a introduit de nombreuses nouveautés les plus visibles étant dans le domaine du multimédia (dessin, vidéo, audio) mais également l’introduction des Web Sockets, une technologie qui ouvre la porte vers de
+                    véritables applications synchrones bénéficiant de canaux de communications permanents et full duplex. Le cours présente l’ensemble des nouveautés de HTML5 (tags, mais surtout très nombreuses APIs JavaScript) mais également de CSS3
+                    (uniquement les nouveautés. Si la partie “media queries” est présentée dans le module sur les interfaces plastiques, elle ne sera pas abordée dans le présent module). Le cours propose de développer des applications riches, collaboratives
+                    utilisant l’ensemble de ces concepts (multimedia, web sockets, animation, son, etc). Il introduit également quelques frameworks (notamment pour faciliter lapproche MVC), comem angularJS. Le cours propose également d’exploiter les
+                    données du Linked Open Data comme DBPedia, Freebase ou autres données RDF libres d’accès et de les intégrer dans les applications développées.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Programmable_web_-_server-side rdf:type owl:NamedIndividual , SI:Web, SI:Projet ;
+	SI:Responsable SI:Sander_Peter ;
+	SI:Intitule "Programmable web - server-side"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Le web se transforme dune application pour livrer des informations aux gens vers une application pour léchange des données entre machines. Dans ce cours, nous étudions des approches web à la fois de la perspective des ses bases philosophiques
+                    aussi bien que ses avancées technologiques. Un partie importante du cours comprend un projet mettant en oeuvre les concepts vus en cours. Dans ce cours il sagit principalement du côté serveur dune application web ; ce cours est intégré
+                    avec Programmable web - client-side pour ce qui traite du côté client.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Urvoy-Keller_Guillaume rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "Guillaume.Urvoy-Keller@unice.fr"^^xsd:string ;
+	SI:Nom "Urvoy-Keller"^^xsd:string ;
+	SI:Prenom "Guillaume"^^xsd:string .
+
+SI:Projet_Ubinet_et_GMD_DSC rdf:type owl:NamedIndividual , SI:Projet ;
+	SI:Responsable SI:Urvoy-Keller_Guillaume ;
+	SI:Intitule "Projet Ubinet et GMD DSC"@fr ;
+	SI:ECTS 4.0 ;
+	SI:Horaires_Cours 50 ;
+	SI:Horaires_Personnel 34 ;
+	SI:Resume "projet ubinet"^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Collet_Philippe rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "Philippe.Collet@unice.fr"^^xsd:string ;
+	SI:Nom "Collet"^^xsd:string ;
+	SI:Prenom "Philippe"^^xsd:string .
+
+SI:Projet_apprenti rdf:type owl:NamedIndividual , SI:Projet ;
+	SI:Responsable SI:Collet_Philippe ;
+	SI:Intitule "Projet apprenti"@fr ;
+	SI:ECTS 10.0 ;
+	SI:Horaires_Cours 100 ;
+	SI:Horaires_Personnel 34 ;
+	SI:Resume "première partie dapprentissagee"^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Projet_de_fin_dtudes rdf:type owl:NamedIndividual , SI:Gestion, SI:Projet ;
+	SI:Responsable SI:Molines_Guilhem ;
+	SI:Intitule "Projet de fin d'études"@fr ;
+	SI:ECTS 6.0 ;
+	SI:Horaires_Cours 100 ;
+	SI:Horaires_Personnel 34 ;
+	SI:Resume "Ce cours permet aux étudiants de mener de bout en bout un projet denvergure, qui peut être orienté ingénierie ou recherche. Laccent est mis sur la gestion professionnelle du projet en mettant les étudiants en responsabilité. Des intervenants
+                    industriels guident les étudiants à travailler dans des conditions proches de celles dune structure privée.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Re-Sampling_methods_and_estimator_selection rdf:type owl:NamedIndividual , SI:Mathematiques ;
+	SI:Responsable SI:Baude_Franoise ;
+	SI:Intitule "Re-Sampling methods and estimator selection"@fr ;
+	SI:ECTS 4.0 ;
+	SI:Horaires_Cours 15 ;
+	SI:Horaires_Personnel 15 ;
+	SI:Horaires_TD 30 ;
+	SI:Semestre 9 .
+
+SI:Donati_Leo rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "leo.donati@unice.fr"^^xsd:string ;
+	SI:Nom "Donati"^^xsd:string ;
+	SI:Prenom "Leo"^^xsd:string .
+
+SI:Ralit_virtuelle rdf:type owl:NamedIndividual , SI:Mathematiques ;
+	SI:Responsable SI:Donati_Leo ;
+	SI:Intitule "Réalité virtuelle"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Le cours aborde les algorithmes qui interviennent en synthèse dimages et présente les librairies de rendu 3D OpenGL et OpenSceneGraph."^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Blay_Mireille rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Blay"^^xsd:string ;
+	SI:Prenom "Mireille"^^xsd:string .
+
+SI:Rtro-ingnierie_Maintenance_et_Evolution_des_logiciels rdf:type owl:NamedIndividual , SI:Informatique ;
+	SI:Responsable SI:Blay_Mireille ;
+	SI:Intitule "Rétro-ingénierie, Maintenance et Evolution des logiciels"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Semestre 9 .
+
+SI:SOA_Intgration_de_services rdf:type owl:NamedIndividual , SI:Architecture ;
+	SI:Responsable SI:Mosser_Sbastien ;
+	SI:Intitule "SOA: Intégration de services"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce cours sintéresse aux Architectures Orientées Services, qui définissent des applications complexes par assemblage de services atomiques. Après de brefs rappels sur les technologies services, laccent est mis sur lintégration des
+                    services par lutilisation dun Enterprise Service Bus, qui permet un couplage lache entre les services et une maintenance plus facile. La dernière partie du cours traite des règles métiers, une approche déclarative pour composer
+                    des services de manière maintenable.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Security_and_Privacy_30 rdf:type owl:NamedIndividual , SI:Securite, SI:Cryptographie ;
+	SI:Responsable SI:Boudaoud_Karima ;
+	SI:Intitule "Security and Privacy 3.0"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce cours concerne essentiellement la sécurité des applications, services et donnés au niveau Web, Mobile et Cloud."^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Smart_Cards rdf:type owl:NamedIndividual , SI:Cours ;
+	SI:Responsable SI:Lavirotte_Stphane ;
+	SI:Intitule "Smart Cards"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Semestre 9 .
+
+SI:Systmes_dexploitation_avancs rdf:type owl:NamedIndividual , SI:Architecture, SI:Fonctionelle, SI:Object, SI:Prodedurale, SI:Programmation, SI:Embarque ;
+	SI:Responsable SI:Lavirotte_Stphane ;
+	SI:Intitule "Systèmes d'exploitation avancés"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Le but de ce cours est de présenter le fonctionnement interne dun système dexploitation ce qui permettra de fédérer les apprentissages issus de différents cours (principes dexécution des programmes, programmation système, clonage de
+                    processus, ...). Après une présentation rapide des architectures de systèmes dexploitation, nous étudierons et mettrons en pratique la virtualisation de systèmes, le développement de modules et de pilotes pour de nouveaux périphériques
+                    et capteurs, les systèmes de fichiers classiques et ceux adaptés pour lembarqué et les objets connectés et la notion de device tree pour lencapsulation des informations sur une plateforme. Lensemble des concepts seront déclinées
+                    sous lenvironnement GNU/Linux. Un peu plus de 2/3 du module sera consacré à la mise en oeuvre des concepts et à la réalisation pratique en travaux dirigés.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Scurit_dans_les_rseaux rdf:type owl:NamedIndividual , SI:Securite, SI:Cryptographie, SI:Reseau ;
+	SI:Responsable SI:Martin_Bruno ;
+	SI:Intitule "Sécurité dans les réseaux"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Après un bref rappel des principaux paradigmes de la cryptographie, le cours aborde la construction de mécanismes de sécurité qui implémentent les services de sécurité (p.e. confidentialité, intégrité, authentification…). Dans la partie
+                    pratique dans un environnement virtualisé sous linux, on met en oeuvre différents outils permettant de sécuriser les services réseau cruciaux comme http, smtp, imap…. On apprend aussi à réaliser simplement un coupe-feu sous linux dans
+                    le cadre d’un petit réseau local. On découvrira aussi quelques outils daudit de sécurité utilisés dans un environnement de machines virtuelles
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Scurit_des_applications_web rdf:type owl:NamedIndividual , SI:Securite, SI:Cryptographie, SI:Web ;
+	SI:Responsable SI:Rezk_Tamara ;
+	SI:Intitule "Sécurité des applications web"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "WASP est un cours introductif aux technologies du web et les problèmes de securité liés au web du aujourdhui.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Techniques_dexpression rdf:type owl:NamedIndividual , SI:Communication ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "Techniques d'expression"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 24 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Semestre 9 .
+
+SI:Renevier_Philippe rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Nom "Renevier"^^xsd:string ;
+	SI:Prenom "Philippe"^^xsd:string .
+
+SI:Techniques_dinteraction_et_multimodalit rdf:type owl:NamedIndividual , SI:Conception, SI:MachineLearning, SI:Mathematiques, SI:Ihm ;
+	SI:Responsable SI:Renevier_Philippe ;
+	SI:Intitule "Techniques d'interaction et multimodalité"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Découvrir et se familiariser avec les interactions et interfaces homme machine dites post-wimp (window icon menu pointer device). Ces IHM sortent donc du contexte habituel de lécran, de la souris et du clavier. Se pencher sur les outils
+                    pour la visualisation des grands espaces dinformation, de Réalité Augmentée constituent des paradigmes dinteractions transversaux à la conception dihm, premiers pas vers la multimodalité.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Lozi_Jean-Pierre rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "Jean-Pierre.LOZI@unice.fr"^^xsd:string ;
+	SI:Nom "Lozi"^^xsd:string ;
+	SI:Prenom "Jean-Pierre"^^xsd:string .
+
+SI:Techniques_modernes_de_programmation_concurrentes rdf:type owl:NamedIndividual , SI:Conception, SI:Fonctionelle, SI:Object, SI:Prodedurale, SI:Programmation ;
+	SI:Responsable SI:Lozi_Jean-Pierre ;
+	SI:Intitule "Techniques modernes de programmation concurrentes"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Compléter le cours de C++ de SI4 par - la description du mécanisme des templates - lutilisation de la programmation par templates, en particulier dans la conception de bibliothèques
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Technologies_pour_les_donnes_massives rdf:type owl:NamedIndividual , SI:Architecture, SI:BigData ;
+	SI:Responsable SI:Fillatre_Lionel ;
+	SI:Intitule "Technologies pour les données massives"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Découvrir une architecture pour le traitement des données massives et savoir utiliser les outils informatiques associés."^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Blanc-Feraud_Laure rdf:type owl:NamedIndividual , SI:Professeur ;
+	SI:Email "Laure.Blanc_Feraud@inria.fr"^^xsd:string ;
+	SI:Nom "Blanc-Feraud"^^xsd:string ;
+	SI:Prenom "Laure"^^xsd:string .
+
+SI:Traitement_avanc_des_Images rdf:type owl:NamedIndividual , SI:BDD, SI:RDBS ;
+	SI:Responsable SI:Blanc-Feraud_Laure ;
+	SI:Intitule "Traitement avancé des Images"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Ce cours est une introduction à quelque outils élémentaires du traitement numérique des images, concernant les manipulations de base comme le filtrage, la transformée de Fourier, la détection de contours, la segmentation, la restauration.
+                    Les outils classiques tels que la morphologie mathématique, les EDP et le calcul variationnel et les modèles stochastiques pour les images sont introduits.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Variable_detection_and_multiple_testing rdf:type owl:NamedIndividual , SI:Cours ;
+	SI:Responsable SI:Baude_Franoise ;
+	SI:Intitule "Variable detection and multiple testing"@fr ;
+	SI:ECTS 4.0 ;
+	SI:Horaires_Cours 15 ;
+	SI:Horaires_Personnel 15 ;
+	SI:Horaires_TD 30 ;
+	SI:Semestre 9 .
+
+SI:Virtualized_infrastructure_in_cloud_computing rdf:type owl:NamedIndividual , SI:Reseau ;
+	SI:Responsable SI:Hermenier_Fabien ;
+	SI:Intitule "Virtualized infrastructure in cloud computing"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "This course presents the virtualized infrastructures that are at the core of today cloud environment with a focus on solutions used to virtualize the network and the computing infrastructure. We discuss some of the challenges that occur
+                    today at large scale such as providing security, quality of service and reducing the total ownership costs. We then present and test common and ongoing solutions.
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Web_de_donnes rdf:type owl:NamedIndividual , SI:BigData, SI:SciencesDesDonnees, SI:Web ;
+	SI:Responsable SI:Faron_Zucker ;
+	SI:Intitule "Web de données"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Les applications web utilisent et échangent des données sur le web qui évolue ainsi vers ce que lon appelle le web de données ouvertes et liées. Ce cours introduit aux enjeux et principes du web de données et aux langages du W3C permettant
+                    ce web de données: RDF et RDFS pour représenter les données et leurs schémas, SPARQL pour interroger ces données, et les autres standards émergents de lactivité Data du W3C (http://www.w3.org/2013/data).
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Web_smantique rdf:type owl:NamedIndividual , SI:Web ;
+	SI:Responsable SI:Faron_Zucker ;
+	SI:Intitule "Web sémantique"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 12 ;
+	SI:Horaires_Personnel 16 ;
+	SI:Horaires_TD 14 ;
+	SI:Resume "Le web de données est la première vague de déploiement du web sémantique. Le web sémantique offre les modèles et techniques permettant de raisonner sur les données du web. Cela passe par la définition de vocabulaires riches ou ontologies
+                    (dans le langage OWL) et de règles dinférences et la mise en oeuvre dinférences lors de linterrogation des données (SPARQL Entailment Regimes).
+                "^^xsd:string ;
+	SI:Semestre 9 .
+
+SI:Anglais_prepa_toeic_apprentis rdf:type owl:NamedIndividual , SI:Anglais_Renforce, SI:Anglais ;
+	SI:Responsable SI:Storey_Franoise ;
+	SI:Intitule "Anglais prepa toeic apprentis"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 45 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Resume "The main theme of this course is to prepare students for the toeic exam
+
+                "^^xsd:string ;
+	SI:Semestre 10 .
+
+SI:Anglais_professionel_apprentis rdf:type owl:NamedIndividual , SI:Anglais_Renforce, SI:Anglais ;
+	SI:Responsable SI:Storey_Franoise ;
+	SI:Intitule "Anglais professionel apprentis"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 45 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Resume "The main theme of this course is to prepare students for the international job market by providing targeted practice in interview techniques and by reviewing or creating professional documents involved in job applications. It aims to consolidate
+                    and extend the skills acquired in the first two years in the school. Grammar and vocabulary will be reviewed as necessary, together with pronunciation practice. Workshop activities and pair-work will be organized in order to allow
+                    students to work at their own levels.
+
+
+                "^^xsd:string ;
+	SI:Semestre 10 .
+
+SI:Enterpreneurship_and_innovation rdf:type owl:NamedIndividual , SI:Gestion ;
+	SI:Responsable SI:Urvoy-Keller_Guillaume ;
+	SI:Intitule "Enterpreneurship and innovation"@fr ;
+	SI:ECTS 6.0 ;
+	SI:Horaires_Cours 50 ;
+	SI:Semestre 10 .
+
+SI:Stage_EPU5 rdf:type owl:NamedIndividual , SI:AnalyseDeDonnees, SI:Management, SI:Mathematiques, SI:Stage ;
+	SI:Responsable SI:Hermenier_Fabien ;
+	SI:Intitule "Stage EPU5"@fr ;
+	SI:ECTS 30.0 ;
+	SI:Resume "Stage de 5 à 6 mois mettant lélève en situation dapprentissage en entreprise, des aspects scientifiques, techniques et humains du métier dingénieur. Ce stage doit être dun niveau suffisant pour préparer lélève à son insertion professionnelle
+                    en tant quingénieur débutant. Il doit pour cela permettre de faire le lien entre les connaissances et savoir-faire acquis pendant le cursus scolaire et universitaire et leurs développement en compétences dans le cadre dune entreprise.
+                    Le travail à effectuer doit comporter au moins en partie des aspects relevant des études ou du développement de niveau ingénieur : analyse des besoins, spécification, conception, études prospectives, recherche et développement, évaluation
+                    et étude de faisabilité de nouvelles technique. Ce stage peut aussi se dérouler dans un département de recherche et développement en entreprise ou en laboratoire de recherche académique.
+                "^^xsd:string ;
+	SI:Semestre 10 .
+
+SI:Stage_Master_2 rdf:type owl:NamedIndividual , SI:AnalyseDeDonnees, SI:Management, SI:Mathematiques, SI:Stage ;
+	SI:Responsable SI:Hermenier_Fabien ;
+	SI:Intitule "Stage Master 2"@fr ;
+	SI:ECTS 30.0 ;
+	SI:Resume "Stage de 5 à 6 mois mettant lélève en situation dapprentissage en entreprise, des aspects scientifiques, techniques et humains du métier dingénieur. Ce stage doit être dun niveau suffisant pour préparer lélève à son insertion professionnelle
+                    en tant quingénieur débutant. Il doit pour cela permettre de faire le lien entre les connaissances et savoir-faire acquis pendant le cursus scolaire et universitaire et leurs développement en compétences dans le cadre dune entreprise.
+                    Le travail à effectuer doit comporter au moins en partie des aspects relevant des études ou du développement de niveau ingénieur : analyse des besoins, spécification, conception, études prospectives, recherche et développement, évaluation
+                    et étude de faisabilité de nouvelles technique. Ce stage peut aussi se dérouler dans un département de recherche et développement en entreprise ou en laboratoire de recherche académique.
+                "^^xsd:string ;
+	SI:Semestre 10 .
+
+SI:Stage_Master_2_apprentis rdf:type owl:NamedIndividual , SI:AnalyseDeDonnees, SI:Management, SI:Mathematiques, SI:Stage ;
+	SI:Responsable SI:Collet_Philippe ;
+	SI:Intitule "Stage Master 2 apprentis"@fr ;
+	SI:ECTS 26.0 ;
+	SI:Resume "Stage de 5 à 6 mois mettant lélève en situation dapprentissage en entreprise, des aspects scientifiques, techniques et humains du métier dingénieur. Ce stage doit être dun niveau suffisant pour préparer lélève à son insertion professionnelle
+                    en tant quingénieur débutant. Il doit pour cela permettre de faire le lien entre les connaissances et savoir-faire acquis pendant le cursus scolaire et universitaire et leurs développement en compétences dans le cadre dune entreprise.
+                    Le travail à effectuer doit comporter au moins en partie des aspects relevant des études ou du développement de niveau ingénieur : analyse des besoins, spécification, conception, études prospectives, recherche et développement, évaluation
+                    et étude de faisabilité de nouvelles technique. Ce stage peut aussi se dérouler dans un département de recherche et développement en entreprise ou en laboratoire de recherche académique.
+                "^^xsd:string ;
+	SI:Semestre 10 .
+
+SI:Techniques_dexpression_apprentis rdf:type owl:NamedIndividual , SI:Communication ;
+	SI:Responsable SI:Bachelot_Christinne ;
+	SI:Intitule "Techniques d'expression apprentis"@fr ;
+	SI:ECTS 2.0 ;
+	SI:Horaires_Cours 45 ;
+	SI:Horaires_Personnel 24 ;
+	SI:Semestre 10 .
+
+
+
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( SI:AL
+                SI:CASPAR
+                SI:IAM
+                SI:IHM
+                SI:SD
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi
