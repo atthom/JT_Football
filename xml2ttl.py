@@ -107,7 +107,7 @@ def make_cours(turtule, cours):
 
     resume = None
     for text in cours.iter("LG"):
-        if text.text is not None and len(text.text) > 10:
+        if text.attrib['label'] == 'Résumé':
             resume = text.text
 
     for description in cours.iter("ul"):
