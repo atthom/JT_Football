@@ -25,3 +25,11 @@ def queryView(request):
         html = sparql.execute()
         return render(request, 'queryResult.html', context={"query": query, "result": html})
     return render(request, 'query.html', context={'form': form})
+
+
+def cursusView(request):
+    form = CursusForm(request.POST or None)
+    if form.is_valid():
+        dominante = form.cleaned_data['dominante']
+        return render(request, 'cursusResult.html', context={"dominante": dominante})
+    return render(request, 'cursus.html', context={'form': form})
