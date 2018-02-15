@@ -8,13 +8,12 @@ from .sparq2html import Sparql2html
 
 class HomePageView(TemplateView):
     def get(self, request, **kwargs):
-        return render(request, 'index.html', context=None)
+        return render(request, 'index.html', context={})
 
 
 class MapView(TemplateView):
     def get(self, request, **kwargs):
-        ctx = dict()
-        return render(request, 'map.html', context=ctx)
+        return render(request, 'map.html', context={})
 
 
 def queryView(request):
