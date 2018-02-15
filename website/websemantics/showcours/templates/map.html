@@ -1,4 +1,19 @@
 {% include "generic/top.html" with active="map" %}
 <h1> Map !</h1>
-<p> You have a "{{ foo }}"</p>
+
+<div id="container">
+</div>
+
+{% load static %}
+<script src="../static/sigma.min.js"></script>
+<script src="../static/sigma.parsers.json.js"></script>
+
+<script type="application/javascript">
+    sigma.parsers.json(
+        'data.json', {
+            container: 'container'
+        }
+    );
+</script>
+
 {% include "generic/bottom.html" %}
