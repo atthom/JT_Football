@@ -10,11 +10,11 @@ class Sparql2html:
                      format="application/rdf+xml")
 
     def execute(self):
-        qres = self.g.query(self.query)
+        qres = self.raw_execute()
         html = "<table class=\"table\">\n<thead>\n<tr>"
-        split_q = self.query.split(" ")
+        split_q = self.query.split("{")[0].split(" ")
         for elem in split_q:
-            if elem[0] == '?':
+            if len(elem) >= 1 and elem[0] == '?':
                 html += "\n<th>" + elem[1:] + "</th>"
         html += "\n</tr>\n</thead>\n<tbody>"
         for row in qres:
@@ -28,3 +28,16 @@ class Sparql2html:
             html += "</tr>"
         html += "\n</tbody>\n</table>"
         return html
+
+    def raw_execute(self):
+        list_result = []
+        for row in self.g.query(self.query):
+            new_row = []
+            for elem in row:
+                el = elem.replace("_", " ")
+                if "#" in el:
+                    ind = el.index("#")
+                    el = el[ind + 1:]
+                new_row.append(el)
+            list_result.append(new_row)
+        return list_result

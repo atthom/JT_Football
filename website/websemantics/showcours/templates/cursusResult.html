@@ -1,6 +1,13 @@
 {% include "generic/top.html" with active="cursus" %}
-<h3>Resultat :</h3>
+<h3>Si vous choisisez d'aller en {{ dominante }} vous aurez comme cours obligatoire :</h3>
 <p>
-    {{ dominante }}
+    <ul>
+        {% for row in cours %}
+        <li>
+            {% for x in row %} {{x}} {% endfor %}
+        </li>
+        {% endfor %}
+    </ul>
 </p>
+
 {% include "generic/bottom.html" %}

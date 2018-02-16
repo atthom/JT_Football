@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect, csrf_exempt
-from .forms import *
+from .forms import CursusForm, QueryForm
 from .sparq2html import Sparql2html
-
+import json
 
 class HomePageView(TemplateView):
     def get(self, request, **kwargs):
@@ -13,7 +13,9 @@ class HomePageView(TemplateView):
 
 class MapView(TemplateView):
     def get(self, request, **kwargs):
-        return render(request, 'map.html', context={})
+        
+        data = json.load(open("../static/data.json"))
+        return render(request, 'map.html', context={"data": json.dumps(data) })
 
 
 def queryView(request):
@@ -30,5 +32,9 @@ def cursusView(request):
     form = CursusForm(request.POST or None)
     if form.is_valid():
         dominante = form.cleaned_data['dominante']
-        return render(request, 'cursusResult.html', context={"dominante": dominante})
+        query = "select ?x where {?x <http://polytech.unice.fr/cours/SI#estDansCursus> ?y filter(?y=\":"
+        query += dominante + "\")}"
+        sparql = Sparql2html(query)
+        cours = sparql.raw_execute()
+        return render(request, 'cursusResult.html', context={"dominante": dominante, "cours": cours})
     return render(request, 'cursus.html', context={'form': form})

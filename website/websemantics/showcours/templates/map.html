@@ -1,19 +1,64 @@
 {% include "generic/top.html" with active="map" %}
 <h1> Map !</h1>
 
-<div id="container">
+<div id="container" style="height: 500px; width: 1000px;">
 </div>
 
 {% load static %}
-<script src="../static/sigma.min.js"></script>
-<script src="../static/sigma.parsers.json.js"></script>
+<script src="{% static "sigma.min.js" %}"></script>
+<script src="{% static "sigma.parsers.json.js" %}"></script>
 
-<script type="application/javascript">
+<script type="application/javascript" charset="utf-8">
+    
+
+    s = new sigma({ 
+        graph: JSON.parse("{{ data | escapejs }}"),
+        container: 'container',
+        settings: {
+            defaultNodeColor: '#ec5148',
+            text: {
+                "more": "",
+                "intro": "Visualisation du graphe RDF généré.",
+                "title": ""
+              },
+              legend: {
+                "edgeLabel": "",
+                "colorLabel": "",
+                "nodeLabel": ""
+              },
+              sigma: {
+                "drawingProperties": {
+                  "defaultEdgeType": "curve",
+                  "defaultHoverLabelBGColor": "#002147",
+                  "defaultLabelBGColor": "#ddd",
+                  "activeFontStyle": "bold",
+                  "defaultLabelColor": "#000",
+                  "labelThreshold": 10,
+                  "defaultLabelHoverColor": "#fff",
+                  "fontStyle": "bold",
+                  "hoverFontStyle": "bold",
+                  "defaultLabelSize": 14
+                },
+                graphProperties: {
+                  "maxEdgeSize": 0.5,
+                  "minEdgeSize": 0.2,
+                  "minNodeSize": 1,
+                  "maxNodeSize": 7
+                },
+                mouseProperties: {
+                  "maxRatio": 20,
+                  "minRatio": 0.75
+                }
+            }
+        }
+    });
+
+    /*
     sigma.parsers.json(
-        'data.json', {
+        '/static/data.json', {
             container: 'container'
         }
-    );
+    );*/
 </script>
 
 {% include "generic/bottom.html" %}
