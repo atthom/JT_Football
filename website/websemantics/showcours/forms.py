@@ -9,8 +9,10 @@ class QueryForm(forms.Form):
 
 
 class CursusForm(forms.Form):
-    CHOICES = (('AL', 'AL'), ('IAM', 'IAM'), ('SD', 'SD'),
-               ('WEB', 'WEB'), ('CASPAR', 'CASPAR'),)
+    CHOICES = (('AL', 'AL'), ('IAM', 'IAM'), 
+        ('IHM', 'IHM'), ('IMAFA', 'IMAFA'), 
+        ('SD', 'SD'), ('WEB', 'WEB'), 
+        ('CASPAR', 'CASPAR'),)
     attr = {"class": "form-control"}
     dominante = forms.CharField(
         widget=forms.Select(choices=CHOICES, attrs=attr))

@@ -1,14 +1,18 @@
 {% include "generic/top.html" with active="dominante" %}
-
-<h3>Mettez les matières dans votre ordre de préférence: </h3>
+<h3 class="choose">Mettez les matières dans votre ordre de préférence: </h3>
 <p>
-        <ul class="list-group sortable">
-            {% for x in cours %}
-            <li class="list-group-item">
-                 {{x}}
-            </li>
-            {% endfor %}
-        </ul>
+    <ul class="list-group sortable choose">
+        {% for x in cours %}
+        <li class="list-group-item">
+            {{x}}
+        </li>
+        {% endfor %}
+    </ul>
+</p>
+<p class="result" style="display: none;">
+    <h3 class="result" style="display: none;">Vous préférez les dominantes suivantes:</h3>
+    <ul class="list-group insert">
+    </ul>
 </p>
 
 <div>
@@ -16,34 +20,49 @@
     <div class="col-md-4">
         <button id="submit" name="submit" class="btn btn-success">Submit</button>
     </div>
- </div>
-
+    {% csrf_token %}
+</div>
 
 {% load static %}
 <script src="{% static "jquery.sortable.min.js" %}"></script>
 
-
 <script>
-        $('.sortable').sortable();
-    
-        $('button').click( function(event) {
-            var ordered = [];
-            $('.sortable').children().each( function() {
-                ordered.push($(this)[0].innerHTML);
-            });
-            $.ajax({
-                url: 'dominante',
-                type: "POST",
-                data: JSON.stringify(ordered),
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data)
-                }
-              });
-            event.preventDefault();
+    $('.choose').sortable();
+    $('button').click(function (event) {
+        var ordered = [];
+        $('.sortable').children().each(function () {
+            one = $(this)[0].innerHTML
+            one = one.replace(/\s{2,}/g, ' ');
+            one = one.substring(1, one.length - 1);
+            ordered.push(one);
         });
-    
-        
-    </script>
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+        function csrfSafeMethod(method) {
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            url: 'dominante',
+            type: "POST",
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+        $.ajax({
+            data: JSON.stringify(ordered),
+        }).done(function (data) {
+            $('.choose').hide();
+            $('.result').show();
+            html = "";
+            var keys = Object.keys(data["req"]);
+            for(var i=0; i < keys.length; i++) {
+                html += "<li class=\"list-group-item\">\n\t <b>" + data["req"][keys[i]][0] + " à " +  data["req"][keys[i]][1] + "%</b>\n</li>";
+            }
+            $('.insert').html(html);
+        });
+        event.preventDefault();
+    });
+</script>
 
 {% include "generic/bottom.html" %}
