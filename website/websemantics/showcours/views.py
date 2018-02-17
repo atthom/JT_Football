@@ -13,10 +13,20 @@ class HomePageView(TemplateView):
 
 class MapView(TemplateView):
     def get(self, request, **kwargs):
-        
         data = json.load(open("../static/data.json"))
-        return render(request, 'map.html', context={"data": json.dumps(data) })
+        return render(request, 'map.html', context={"data": json.dumps(data)})
 
+
+def dominanteView(request):
+    if request.is_ajax() or request.method == 'POST':
+       return render(request, 'dominante.html', context={"req": request})
+
+    query = "select ?x ?y where {?x <http://polytech.unice.fr/cours/SI#estDansCursus> ?y}"
+    sparql = Sparql2html(query)
+    cours_dominante = sparql.raw_execute()
+    cours = [row[0] for row in cours_dominante]
+    return render(request, 'dominante.html', context={"cours": cours})
+    
 
 def queryView(request):
     form = QueryForm(request.POST or None)

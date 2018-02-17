@@ -1,10 +1,10 @@
 {% include "generic/top.html" with active="cursus" %}
 <h3>Si vous choisisez d'aller en {{ dominante }} vous aurez comme cours obligatoire :</h3>
 <p>
-    <ul>
-        {% for row in cours %}
-        <li>
-            {% for x in row %} {{x}} {% endfor %}
+    <ul class="list-group">
+        {% for cour in cours %}
+        <li class="list-group-item">
+                {% for x in cour %} {{x}} {% endfor %}
         </li>
         {% endfor %}
     </ul>

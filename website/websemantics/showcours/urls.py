@@ -18,6 +18,7 @@ urlpatterns = [
     path('map', views.MapView.as_view()),
     path('query', views.queryView),
     path('cursus', views.cursusView),
+    path('dominante', views.dominanteView),
     #path('exemple', views.post_exemple),
     #path('result', views.result),
 ]
